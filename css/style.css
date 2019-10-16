@@ -2,30 +2,30 @@ body {
     background:#0db5ba;
 }
 
-/* #team1 {
-    background-color: #1AFDFF;
-} */
-
 .pokemonName {
     display: inline-block;
     padding-left: .1em;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 .pokemonBox {
 
-    width: 20%;
+    width: 45%;
     height: 15%;
     opacity: 0.75;
     margin-left: 1em;
     border-radius: 5%;
     display: inline-block;
     border: 2px solid green;
-    background-color: greenyellow;
+    background-image: linear-gradient(darkGreen, lightGreen);
 }
 
 .pokemonBox p {
     color: white;
-    font-size: 1.5em;
+    font-size: 0.9em;
+    padding-bottom: .25em;
+    letter-spacing: .05em;;
     text-shadow: 1px 1px 1.5px black;
 }
 
@@ -33,11 +33,47 @@ body {
     float: left;
     width: 5em;
     height: 5em;
+    margin-left: 0.5em;
 }
 
+#team1, #team2 {
+    width: 45%;
+    display: inline-block;
+}
+
+#team1 {
+    margin-left: 1em;
+}
+
+#team2 {
+    margin-left: 5em;
+}
 
 .gender {
-    margin-left: 0.30em;
     width: 1em;
     height: 1em;
+    float: right;
+    padding-top: 1em;
+    padding-right: 1em;
 }
+
+.health {
+    margin: 0 0 0 13em;
+    text-shadow: 1px 1px 1.5px black;
+}
+
+.health-bar {
+    width: 9em;
+    height: 0.75em;
+    margin-top: 0.15em;
+    border-radius: 30px;
+    margin-bottom: 0.05em;
+    display: inline-block;
+    border: 3px solid black;
+    background-color: #007f00;
+  }
+
+.row0, .row1, .row2 {
+    display: block;
+    margin-bottom: 1em;
+  }
