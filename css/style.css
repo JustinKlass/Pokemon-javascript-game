@@ -1,5 +1,27 @@
 img {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px solid black;
+    width: 5em;
+    height: 5em;
+}
+
+#team1 {
+    background-color: #1AFDFF;
+}
+
+.title {
+    display: inline-block;
+}
+
+.team {
+    background-color: green;
+    display: inline-block;
+    opacity: 0.75;
+}
+
+.sprite {
+    float: left;
+}
+.gender {
+    margin-left: 0.30em;
+    width: 1em;
+    height: 1em;
 }
