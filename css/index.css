@@ -1,11 +1,16 @@
 .container {
-    margin-bottom: 10%;
+    margin-bottom: 4%;
+}
+#create {
+    margin-bottom: 2.75%;
+    margin-top: 1%;
 }
 
-#create {
+#confirm {
+    margin-top: 5%;
+}
+#create, #confirm {
     margin-left: 40%;
-    margin-top: 2.5%;
-    margin-bottom: 5%;
     width: 20%;
     height: 2.5em;
     font-size: 1.25em;
@@ -17,7 +22,7 @@
     background-color: #FFCA06;
 }
 
-#create:hover {
+#create:hover, #confirm:hover {
     background-color: #0D5FBA;
     cursor: pointer;
 }

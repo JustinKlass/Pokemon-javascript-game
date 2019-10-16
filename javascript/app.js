@@ -75,12 +75,12 @@ const makePokemonRow = () => {
 const makeTeam = (teamNum) => {
     if(teamNum === 1) {
         const playerTeam = $("<h1 class = 'teamH1'>");
-        playerTeam.text('Your Team!');
+        playerTeam.text('Select a Pokemon!');
         $('#team1').append(playerTeam);
     }
     else if(teamNum === 2) {
         const compTeam = $("<h1 class = 'teamH1'>");
-        compTeam.text('Your opponent\'s Team! ');
+        compTeam.text('Your opponent\'s Pokemon! ');
         $('#team2').append(compTeam);
     }
 
@@ -97,24 +97,49 @@ const makeTeam = (teamNum) => {
     }
 }
 
+const scrollWindow = (id) => {
+    event.preventDefault();
+    $('html, body').animate({
+        scrollTop: $(id).offset().top}, 1500);
+}
+
+
+
+
+const cloneChoice = (stat) => {
+    console.log(stat.childNodes);
+
+}
+
 
 $(() => {
 
-    $('#create').on('click', () => {
+    $('#create').on('click', (event) => {
+        scrollWindow($('#scroll'));
         $('#team1').empty();
         $('#team2').empty();
         makeTeam(1);
         makeTeam(2);
+        $('.confirmDiv').empty();
     });
 
     $('body').on('click', '.pokemonBox1', (event) => {
+        
         $('.pokemonBox1').css('border', '0.20em solid green');
-        console.log(event.currentTarget);
         $(event.currentTarget).css('border', '0.20em solid lime');
-        const battlefield = $('.battlefield');
-        const card = event.currentTarget;
-        battlefield.append(card.clone());
-        $('body').append(battlefield);
+
+        const confirm = $("<button id = 'confirm'>");
+        confirm.text('Confirm');
+
+        $('.confirmDiv').empty();
+        $('.confirmDiv').append(confirm);
+
+        scrollWindow(confirm);
+
+    });
+
+    $('body').on('click', '.confirmDiv', (event) => {
+        console.log(1);
     });
 
 });
