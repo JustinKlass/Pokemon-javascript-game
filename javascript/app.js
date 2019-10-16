@@ -75,12 +75,14 @@ const makePokemonRow = () => {
 const makeTeam = (teamNum) => {
     if(teamNum === 1) {
         const playerTeam = $("<h1 class = 'teamH1'>");
-        playerTeam.text('Select a Pokemon!');
+        const e = '\u00E9';
+        playerTeam.text(`Select a Pok${e}mon!`);
         $('#team1').append(playerTeam);
     }
     else if(teamNum === 2) {
         const compTeam = $("<h1 class = 'teamH1'>");
-        compTeam.text('Your opponent\'s Pokemon! ');
+        const e = '\u00E9';
+        compTeam.text(`Your opponent\'s Pok${e}mon!`);
         $('#team2').append(compTeam);
     }
 
