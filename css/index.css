@@ -5,10 +5,21 @@
 #create {
     margin-left: 40%;
     margin-top: 2.5%;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
     width: 20%;
-    height: 4em;
-    font-size: 0.75em;
+    height: 2.5em;
+    font-size: 1.25em;
+    border-radius: 30px;
+    color: white;
+    text-align: center;
+    text-shadow: 1px 1px 1.5px black;
+    border: 0.3em solid #0D5FBA;
+    background-color: #FFCA06;
+}
+
+#create:hover {
+    background-color: #0D5FBA;
+    cursor: pointer;
 }
 
 .pokemonName {
@@ -18,7 +29,7 @@
     margin-bottom: 0;
 }
 
-.pokemonBox {
+.pokemonBox1, .pokemonBox2 {
 
     width: 45%;
     height: 15%;
@@ -26,16 +37,20 @@
     margin-left: 1em;
     border-radius: 5%;
     display: inline-block;
-    border: 2px solid green;
+    border: 0.20em solid green;
     background-image: linear-gradient(darkGreen, lightGreen);
 }
 
-.pokemonBox p {
+.pokemonBox1 p, .pokemonBox2 p {
     color: white;
     font-size: 0.9em;
     padding-bottom: .25em;
     letter-spacing: .05em;;
     text-shadow: 1px 1px 1.5px black;
+}
+
+.pokemonBox1:hover {
+    cursor: pointer;
 }
 
 .sprite {
@@ -85,4 +100,10 @@
 .row0, .row1, .row2 {
     display: block;
     margin-bottom: 1em;
+  }
+
+  .teamH1 {
+      color: white;
+      text-align: center;
+      text-shadow: 1px 1px 1.5px black;
   }

@@ -34,7 +34,7 @@ const getCapitalizedName = (name) => {
 }
 
 
-const makePokemon = (randomId, div) => {
+const makePokemon = (randomId, div, pokemonBox) => {
     const $container = $(div);
     $.ajax({
         url: `https://pokeapi.co/api/v2/pokemon/${randomId}/`,
@@ -42,7 +42,7 @@ const makePokemon = (randomId, div) => {
     }).done(function(data) {
         const pokemon = new getPokemonStats(data.name, data.stats[5].base_stat, data.sprites.front_default, getRandomGender());
 
-        const team = $("<div class = 'pokemonBox'>"); 
+        const team = $(`<div class = '${pokemonBox}'>`); 
         const sprite = $(`<img src = ${pokemon.sprite} class = 'sprite'>`);
 
         const name = $("<p class = 'pokemonName'>");
@@ -73,13 +73,26 @@ const makePokemonRow = () => {
 
 
 const makeTeam = (teamNum) => {
+    if(teamNum === 1) {
+        const playerTeam = $("<h1 class = 'teamH1'>");
+        playerTeam.text('Your Team!');
+        $('#team1').append(playerTeam);
+    }
+    else if(teamNum === 2) {
+        const compTeam = $("<h1 class = 'teamH1'>");
+        compTeam.text('Your opponent\'s Team! ');
+        $('#team2').append(compTeam);
+    }
+
+    const box = 'pokemonBox';
+    const pokemonBox = (box.concat('', teamNum.toString()));
     for(i = 0; i < 3; i++) {
+
         const div = $(`<div class = 'row${i}'>`);
-        console.log(i)
         $(`#team${teamNum}`).append(div);
         for(j = 0; j < 2; j++) {
             const randomId = getRandomId();
-            makePokemon(randomId, div);  
+            makePokemon(randomId, div, pokemonBox);  
         }
     }
 }
@@ -87,8 +100,21 @@ const makeTeam = (teamNum) => {
 
 $(() => {
 
-    $('#create').on('click', (event) => {
+    $('#create').on('click', () => {
+        $('#team1').empty();
+        $('#team2').empty();
         makeTeam(1);
         makeTeam(2);
     });
+
+    $('body').on('click', '.pokemonBox1', (event) => {
+        $('.pokemonBox1').css('border', '0.20em solid green');
+        console.log(event.currentTarget);
+        $(event.currentTarget).css('border', '0.20em solid lime');
+        const battlefield = $('.battlefield');
+        const card = event.currentTarget;
+        battlefield.append(card.clone());
+        $('body').append(battlefield);
+    });
+
 });
