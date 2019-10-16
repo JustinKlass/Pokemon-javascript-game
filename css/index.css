@@ -1,52 +1,14 @@
-body {
-    /* background:#0D5FBA; */
-    background:#0DB5BA;
-    margin: 0;
+.container {
+    margin-bottom: 10%;
 }
-.nav {
-   padding: 0;
-   margin-bottom: 4%; 
-   /* background-color: #0DB5BA; */
-   background-color: #0D5FBA;
-}
-
-.nav ul {
- background-color: #FFCA06;
- padding: 0;
- margin: 0;
- height: 50px;
- width: 100%;
-}
-
-.nav li {
-    margin-top: 0.5em;
-    display: inline-block;
-}
-.nav li a {
-    color: white;
-    font-size: 1.5em;
-    margin-left: 10.5em;
-    text-decoration: none;
-
-    text-shadow: 1px 1px 1.5px black;
-}
-.logo {
-    padding-top: 2%;
-    padding-bottom: 3%;
-    margin-left: 32.5%;
-    width: 35%;
-    height: 7.5em;
-}
-
-
-
 
 #create {
     margin-left: 40%;
-    margin-bottom: 3%;
+    margin-top: 2.5%;
+    margin-bottom: 10%;
     width: 20%;
     height: 4em;
-
+    font-size: 0.75em;
 }
 
 .pokemonName {

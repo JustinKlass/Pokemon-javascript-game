@@ -11,6 +11,8 @@ class getPokemonStats {
         this.attack4 = '';
     }
 }
+
+
 const getRandomGender = () => {
     if( Math.random() < 0.5) {
         return 'img/female.png';
@@ -19,13 +21,19 @@ const getRandomGender = () => {
         return 'img/male.png';
     }
 }
+
+
 const getRandomId = () => {
     let randPokemon = Math.floor(Math.random() * Math.floor(803));
     return randPokemon;
 }
+
+
 const getCapitalizedName = (name) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
 }
+
+
 const makePokemon = (randomId, div) => {
     const $container = $(div);
     $.ajax({
@@ -55,12 +63,14 @@ const makePokemon = (randomId, div) => {
     })
 }
 
+
 const makePokemonRow = () => {
     for(i = 0; i < 2; i++) {
         const randomId = getRandomId();
         makePokemon(randomId);  
     }
 }
+
 
 const makeTeam = (teamNum) => {
     for(i = 0; i < 3; i++) {
@@ -74,9 +84,11 @@ const makeTeam = (teamNum) => {
     }
 }
 
+
 $(() => {
+
     $('#create').on('click', (event) => {
         makeTeam(1);
         makeTeam(2);
-    })
-})
+    });
+});
