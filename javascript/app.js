@@ -14,6 +14,10 @@ class getPokemonStats {
     }
 }
 
+const pokemonList = [];
+const yourPokemon = [];
+const oppPokemon = [];
+
 const getRandomGender = () => {
     if( Math.random() < 0.5) {
         return 'img/female.png';
@@ -35,27 +39,43 @@ const getCapitalizedName = (name) => {
 
 /* TO ACCESS THE ACTUAL MAKING OF POKEMON AND WHERE THE DATA IS ACTUALLY GRABBED */
 const makePokemon = (randomId, div, pokemonBox) => {
-    const $container = $(div);
+
     $.ajax({
         url: `https://pokeapi.co/api/v2/pokemon/${randomId}/`,
         type: "GET",
     }).done(function(data) {
-        // console.log(data);
-        const pokemon = new getPokemonStats(data.name, data.stats[5].base_stat, data.sprites.front_default, data.sprites.back_default, getRandomGender(), data.id);
-        console.log(pokemon);
 
+        const pokemon = new getPokemonStats(
+            data.name, 
+            data.stats[5].base_stat, 
+            data.sprites.front_default, 
+            data.sprites.back_default, 
+            getRandomGender(), 
+            data.id
+        );
+        
+        pokemonList.push(pokemon);
+        appendBox(pokemon, pokemonBox, div);
+
+    });
+}
+
+const appendBox = (pokemon, pokemonBox, div) => {
+        const $container = $(div);
         const team = $(`<div class = '${pokemonBox}'>`); 
         const sprite = $(`<img src = ${pokemon.sprite} class = 'sprite'>`);
 
         const name = $("<p class = 'pokemonName'>");
         const gender = $(`<img src = '${pokemon.gender}' class = 'gender'>`);
 
-        const healthBar = $("<div class = 'health-bar'></div>");
+        const healthBar = $("<div class = 'health-bar'>");
+
         const health = $("<p class = 'health'>");
         health.text(`${pokemon.currentHp}/${pokemon.hp}`);
 
-        const pokemonId = $('<p>');
+        const pokemonId = $("<p class = 'pokemonId'>");
         pokemonId.text(`${pokemon.id}`);
+
         name.text(getCapitalizedName(pokemon.name));
 
         $container.append(team);
@@ -66,7 +86,6 @@ const makePokemon = (randomId, div, pokemonBox) => {
         pokemonId.hide();
         team.append(healthBar);
         team.append(health);
-    });
 }
 
 const makePokemonRow = () => {
@@ -77,6 +96,7 @@ const makePokemonRow = () => {
 }
 
 const makeTeam = (teamNum) => {
+
     if(teamNum === 1) {
         const playerTeam = $("<h1 class = 'teamH1'>");
         const e = '\u00E9';
@@ -92,13 +112,12 @@ const makeTeam = (teamNum) => {
 
     const box = 'pokemonBox';
     const pokemonBox = (box.concat('', teamNum.toString()));
-    for(i = 0; i < 3; i++) {
 
+    for(i = 0; i < 3; i++) {
         const div = $(`<div class = 'row${i}'>`);
         $(`#team${teamNum}`).append(div);
 
         for(j = 0; j < 2; j++) {
-            
             const randomId = getRandomId();
             makePokemon(randomId, div, pokemonBox);
         }
@@ -130,15 +149,12 @@ const createOppBattleCard = () => {
 }
 
 
-// const cloneChoice = (stat) => {
-//     console.log(stat.childNodes);
-
-// }
 
 
 /* START OF JQUERY */
 
 $(() => {
+
     $('#create').on('click', (event) => {
         scrollWindow($('#scroll'));
         $('#team1').empty();
@@ -149,7 +165,9 @@ $(() => {
     });
 
     $('body').on('click', '.pokemonBox1', (event) => {
-        
+
+        console.log(pokemonList);
+
         $('.pokemonBox1').css('border', '0.20em solid green');
         $(event.currentTarget).css('border', '0.20em solid lime');
 
@@ -159,22 +177,15 @@ $(() => {
         $('.confirmDiv').empty();
         $('.confirmDiv').append(confirm);
         selectedPokemon = $(event.currentTarget);
-        console.log(selectedPokemon)
+
+        console.log(selectedPokemon);
+        // console.log(selectedPokemon);
         scrollWindow(confirm);
 
     });
 
-    $('body').on('click', '.confirmDiv', (event) => {
+     $('body').on('click', '.confirmDiv', (event) => {
+
         console.log(selectedPokemon);
-        console.log(selectedPokemon[0].childNodes[1]);
-
-        $.ajax({
-            url: `https://pokeapi.co/api/v2/pokemon/2/`,
-            type: "GET",
-
-        }).done(function(data) {
-            createOppBattleCard();
-        });
     });
-
 });

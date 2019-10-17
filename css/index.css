@@ -8,10 +8,6 @@
     margin-top: 1%;
 }
 
-#confirm {
-    margin-top: 5%;
-}
-
 #create, #confirm {
     margin-left: 40%;
     width: 20%;
@@ -70,6 +66,7 @@
 
 #team1, #team2 {
     width: 45%;
+    margin-bottom: 4%;
     display: inline-block;
 }
 
