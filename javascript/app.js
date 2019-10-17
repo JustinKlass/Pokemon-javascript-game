@@ -1,11 +1,12 @@
 class getPokemonStats {
-    constructor(name, hp, sprite, backSprite, gender) {
+    constructor(name, hp, sprite, backSprite, gender, id) {
         this.name = name;
         this.currentHp = hp;
         this.hp = hp;
         this.sprite = sprite;
         this.backSprite = backSprite;
         this.gender = gender;
+        this.id = id;
         this.attack1 = '';
         this.attack2 = '';
         this.attack3 = '';
@@ -22,6 +23,7 @@ const getRandomGender = () => {
     }
 }
 
+/* GETS RANDOM NUMBER BETWEEN 1 803 TO GET A RANDOM POKEMON */
 const getRandomId = () => {
     let randPokemon = (Math.floor(Math.random() * Math.floor(802)) + 1);
     return randPokemon;
@@ -39,7 +41,8 @@ const makePokemon = (randomId, div, pokemonBox) => {
         type: "GET",
     }).done(function(data) {
         // console.log(data);
-        const pokemon = new getPokemonStats(data.name, data.stats[5].base_stat, data.sprites.front_default, data.sprites.back_default, getRandomGender());
+        const pokemon = new getPokemonStats(data.name, data.stats[5].base_stat, data.sprites.front_default, data.sprites.back_default, getRandomGender(), data.id);
+        console.log(pokemon);
 
         const team = $(`<div class = '${pokemonBox}'>`); 
         const sprite = $(`<img src = ${pokemon.sprite} class = 'sprite'>`);
@@ -50,16 +53,20 @@ const makePokemon = (randomId, div, pokemonBox) => {
         const healthBar = $("<div class = 'health-bar'></div>");
         const health = $("<p class = 'health'>");
         health.text(`${pokemon.currentHp}/${pokemon.hp}`);
+
+        const pokemonId = $('<p>');
+        pokemonId.text(`${pokemon.id}`);
         name.text(getCapitalizedName(pokemon.name));
 
         $container.append(team);
         team.append(sprite);
         team.append(name);
         team.append(gender);
+        team.append(pokemonId);
+        pokemonId.hide();
         team.append(healthBar);
         team.append(health);
-
-    })
+    });
 }
 
 const makePokemonRow = () => {
@@ -104,11 +111,13 @@ const scrollWindow = (id) => {
         scrollTop: $(id).offset().top}, 1500);
 }
 
-const createPlayerBattleCard = () => {
+const createPlayerBattleCard = (img) => {
     const battleCard = $("<div class = 'battleCard'>");
     const p = $('<p>');
+    const sprite = $(`<img src='${img}'>`);
     p.text('PLAYER BATTLECARD');
     battleCard.append(p);
+    battleCard.append(sprite)
     $('#battleContainer').append(battleCard);
 }
 
@@ -125,6 +134,9 @@ const createOppBattleCard = () => {
 //     console.log(stat.childNodes);
 
 // }
+
+
+/* START OF JQUERY */
 
 $(() => {
     $('#create').on('click', (event) => {
@@ -146,19 +158,23 @@ $(() => {
 
         $('.confirmDiv').empty();
         $('.confirmDiv').append(confirm);
-
+        selectedPokemon = $(event.currentTarget);
+        console.log(selectedPokemon)
         scrollWindow(confirm);
 
     });
 
     $('body').on('click', '.confirmDiv', (event) => {
-        console.log(1);
+        console.log(selectedPokemon);
+        console.log(selectedPokemon[0].childNodes[1]);
 
-        const h = $('<h1>');
-        h.text('Pokemon');
-        $('#battleContainer').append(h);
-        createPlayerBattleCard();
-        createOppBattleCard();
+        $.ajax({
+            url: `https://pokeapi.co/api/v2/pokemon/2/`,
+            type: "GET",
+
+        }).done(function(data) {
+            createOppBattleCard();
+        });
     });
 
 });
