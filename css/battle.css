@@ -1,0 +1,22 @@
+#battleContainer {
+    background-color: #E0FFDB;
+    width: 100%;
+}
+
+.battleCard {
+    width: 30%;
+    height: 15%;
+    margin-left: 1em;
+    border-radius: 0.5em;
+    display: inline-block;
+    background-color: #FFFEE5;
+    border: 0.25em solid black;
+}
+
+.battleCard p {
+    color: black;
+    font-size: 0.9em;
+    padding-bottom: .25em;
+    letter-spacing: .05em;;
+    text-shadow: 1px 1px 1.5px white;
+}
