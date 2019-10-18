@@ -7,10 +7,10 @@ class getPokemonStats {
         this.sprite = sprite;
         this.backSprite = backSprite;
         this.gender = gender;
-        this.attack1 = '';
-        this.attack2 = '';
-        this.attack3 = '';
-        this.attack4 = '';
+        this.attack1 = [2, 3, 15];
+        this.attack2 = [5, 6, 10];
+        this.attack3 = [8];
+        this.attack4 = [7, 9];
     }
 }
 
@@ -18,11 +18,9 @@ const yourList = [];
 const oppList =[];
 
 const selectedPokemon = [];
-const oppSelected = [];
+const oppSelectedPokemon = [];
 
 const yourSelectedId = [];
-const oppSelectedId = [];
-
 
 const getRandomGender = () => {
     if( Math.random() < 0.5) {
@@ -48,24 +46,44 @@ const scrollWindow = (id) => {
         scrollTop: $(id).offset().top}, 1500);
 }
 
-const createPlayerBattleCard = (img) => {
+const createPlayerBattleCard = () => {
+
+    const playerBattle = $("<div class = 'playerBattle'>");
+
+    const spriteDiv = $("<div class = 'spriteDiv'>");
     const battleCard = $("<div class = 'battleCard'>");
+    const backSprite = $(`<img src='${selectedPokemon[0].backSprite}'>`);
     const p = $('<p>');
-    const sprite = $(`<img src='${img}'>`);
-    p.text('PLAYER BATTLECARD');
-    battleCard.append(p);
-    battleCard.append(sprite);
-    $('#battleContainer').append(battleCard);
+
+    p.text(selectedPokemon[0].name);
+    battleCard.append(p);    
+
+    spriteDiv.append(backSprite);
+
+    $(playerBattle).append(spriteDiv);
+    $(playerBattle).append(battleCard);
+    $('#battleContainer').append(playerBattle)
 }
 
-const createOppBattleCard = (img) => {
+const createOppBattleCard = () => {
+    
+    const oppBattle = $("<div class = 'playerBattle'>");
+
+    const spriteDiv = $("<div class = 'spriteDiv'>");
     const battleCard = $("<div class = 'battleCard'>");
+    const sprite = $(`<img src='${oppSelectedPokemon[0].sprite}'>`);
     const p = $('<p>');
-    const backSprite = $(`<img src='${img}'>`);
-    p.text('OPPONENT BATTLECARD');
+
+    p.text(oppSelectedPokemon[0].name);
     battleCard.append(p);
-    battleCard.append(backSprite);
-    $('#battleContainer').append(battleCard);
+    
+    spriteDiv.append(sprite);
+
+    $(oppBattle).append(spriteDiv);
+    $(oppBattle).append(battleCard);
+    $('#battleContainer').append(oppBattle)
+    
+
 }
 
 const appendBox = (pokemon, pokemonBox, div, count) => {
@@ -137,7 +155,6 @@ const makeTeam = (teamNum, count, arrayName) => {
     }
 
 
-
     const box = 'pokemonBox';
     const pokemonBox = (box.concat('', teamNum.toString()));
 
@@ -156,18 +173,14 @@ const makeTeam = (teamNum, count, arrayName) => {
     }
 }
 
-const randOpp = () => {
+const oppPokemon = () => {
 
     const rand = Math.floor(Math.random() * 6);
     const opp = oppList[rand].id;
 
-    // console.log(rand);
-    // console.log(oppList);
-    // console.log(opp);
-
     for(i = 0; i < oppList.length; i++) {
         if(oppList[i].id === opp) {
-            oppSelected.push(oppList[i])
+            oppSelectedPokemon.push(oppList[i])
         }
     }
 }
@@ -181,9 +194,14 @@ const yourPokemon = () => {
     }
 }
 
+const playAudio = () => {
+    const audio = document.getElementById('audio');
+    audio.play();
+}
 
 
 /* START OF JQUERY */
+
 
 $(() => {
 
@@ -197,8 +215,6 @@ $(() => {
         $('.confirmDiv').empty();
 
     });
-
-
 
     $('body').on('click', '.pokemonBox1', (event) => {
 
@@ -218,14 +234,38 @@ $(() => {
 
     });
 
-
-     $('body').on('click', '.confirmDiv', (event) => {
+    $('body').on('click', '.confirmDiv', (event) => {
 
         yourPokemon();
-        randOpp();
+        oppPokemon();
+
+        // playAudio();
 
         console.log(selectedPokemon);
-        console.log(oppSelected);
+        console.log(oppSelectedPokemon);
+
+        createOppBattleCard();
+        createPlayerBattleCard();
+
+        const bar = ("<div class = 'bar'>");
+        const textBar = ("<div class = 'textBar'>");
+        const attackBar = ("<div class = 'attackBar'>");
+
+        const textP = $('<p>');
+        const attackP = $('<p>');
+
+        textP.text('fight');
+        attackP.text('fight');
+
+        $(textBar).append(textP);
+        $(attackBar).append(attackP);
+
+        $('#battleContainer').append(bar);
+        $(bar).append(textBar);
+        $(bar).append(attackBar);
+
+
 
     });
+
 });
