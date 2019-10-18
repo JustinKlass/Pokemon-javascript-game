@@ -1,12 +1,12 @@
 class getPokemonStats {
     constructor(name, hp, sprite, backSprite, gender, id) {
         this.name = name;
+        this.id = id;
         this.currentHp = hp;
         this.hp = hp;
         this.sprite = sprite;
         this.backSprite = backSprite;
         this.gender = gender;
-        this.id = id;
         this.attack1 = '';
         this.attack2 = '';
         this.attack3 = '';
@@ -14,10 +14,15 @@ class getPokemonStats {
     }
 }
 
-const pokemonList = [];
-const yourPokemon = [];
-const oppPokemon = [];
-const selectedId = [];
+const yourList = [];
+const oppList =[];
+
+const selectedPokemon = [];
+const oppSelected = [];
+
+const yourSelectedId = [];
+const oppSelectedId = [];
+
 
 const getRandomGender = () => {
     if( Math.random() < 0.5) {
@@ -90,14 +95,8 @@ const appendBox = (pokemon, pokemonBox, div, count) => {
 
 }
 
-
-
-
-
-
-
 /* TO ACCESS THE ACTUAL MAKING OF POKEMON AND WHERE THE DATA IS ACTUALLY GRABBED */
-const makePokemon = (randomId, div, pokemonBox, count) => {
+const makePokemon = (randomId, div, pokemonBox, count, arrayName) => {
 
     $.ajax({
         url: `https://pokeapi.co/api/v2/pokemon/${randomId}/`,
@@ -113,16 +112,14 @@ const makePokemon = (randomId, div, pokemonBox, count) => {
             data.id
         );
 
-        pokemonList.push(pokemon);
+        arrayName.push(pokemon);
         appendBox(pokemon, pokemonBox, div, count);
 
     });
 
 };
 
-
-
-const makeTeam = (teamNum, count) => {
+const makeTeam = (teamNum, count, arrayName) => {
 
 
     if(teamNum === 1) {
@@ -131,6 +128,7 @@ const makeTeam = (teamNum, count) => {
         playerTeam.text(`Select a Pok${e}mon!`);
         $('#team1').append(playerTeam);
     }
+
     else if(teamNum === 2) {
         const compTeam = $("<h1 class = 'teamH1'>");
         const e = '\u00E9';
@@ -149,16 +147,39 @@ const makeTeam = (teamNum, count) => {
         $(`#team${teamNum}`).append(div);
 
         for(j = 0; j < 2; j++) {
-            const randomId = getRandomId();
 
-            makePokemon(randomId, div, pokemonBox, count);
+            const randomId = getRandomId();
+            makePokemon(randomId, div, pokemonBox, count, arrayName);
             count++;
 
         }
     }
 }
 
+const randOpp = () => {
 
+    const rand = Math.floor(Math.random() * 6);
+    const opp = oppList[rand].id;
+
+    // console.log(rand);
+    // console.log(oppList);
+    // console.log(opp);
+
+    for(i = 0; i < oppList.length; i++) {
+        if(oppList[i].id === opp) {
+            oppSelected.push(oppList[i])
+        }
+    }
+}
+
+const yourPokemon = () => {
+
+    for(i = 0; i < yourList.length; i++) {
+        if(yourList[i].id === yourSelectedId[0]) {
+            selectedPokemon.push(yourList[i]);
+        }
+    }
+}
 
 
 
@@ -167,12 +188,14 @@ const makeTeam = (teamNum, count) => {
 $(() => {
 
     $('#create').on('click', (event) => {
+
         scrollWindow($('#scroll'));
         $('#team1').empty();
         $('#team2').empty();
-        makeTeam(1, 0);
-        makeTeam(2, 6);
+        makeTeam(1, 0, yourList);
+        makeTeam(2, 6, oppList);
         $('.confirmDiv').empty();
+
     });
 
 
@@ -188,21 +211,21 @@ $(() => {
         $('.confirmDiv').empty();
         $('.confirmDiv').append(confirm);
 
-        selectedId.push(parseInt(event.currentTarget.getAttribute('id')));
+        yourSelectedId.shift();
+        yourSelectedId.push(parseInt(event.currentTarget.getAttribute('id')));
+
         scrollWindow(confirm);
-
-
-        console.log(pokemonList);
-        console.log(event.currentTarget);
 
     });
 
 
-
      $('body').on('click', '.confirmDiv', (event) => {
 
-        console.log(selectedId);
-        console.log(pokemonList.id == selectedId);
+        yourPokemon();
+        randOpp();
+
+        console.log(selectedPokemon);
+        console.log(oppSelected);
 
     });
 });
