@@ -46,46 +46,6 @@ const scrollWindow = (id) => {
         scrollTop: $(id).offset().top}, 1500);
 }
 
-const createPlayerBattleCard = () => {
-
-    const playerBattle = $("<div class = 'playerBattle'>");
-
-    const spriteDiv = $("<div class = 'spriteDiv'>");
-    const battleCard = $("<div class = 'battleCard'>");
-    const backSprite = $(`<img src='${selectedPokemon[0].backSprite}'>`);
-    const p = $('<p>');
-
-    p.text(selectedPokemon[0].name);
-    battleCard.append(p);    
-
-    spriteDiv.append(backSprite);
-
-    $(playerBattle).append(spriteDiv);
-    $(playerBattle).append(battleCard);
-    $('#battleContainer').append(playerBattle)
-}
-
-const createOppBattleCard = () => {
-    
-    const oppBattle = $("<div class = 'playerBattle'>");
-
-    const spriteDiv = $("<div class = 'spriteDiv'>");
-    const battleCard = $("<div class = 'battleCard'>");
-    const sprite = $(`<img src='${oppSelectedPokemon[0].sprite}'>`);
-    const p = $('<p>');
-
-    p.text(oppSelectedPokemon[0].name);
-    battleCard.append(p);
-    
-    spriteDiv.append(sprite);
-
-    $(oppBattle).append(spriteDiv);
-    $(oppBattle).append(battleCard);
-    $('#battleContainer').append(oppBattle)
-    
-
-}
-
 const appendBox = (pokemon, pokemonBox, div, count) => {
 
     const $container = $(div);
@@ -199,6 +159,46 @@ const playAudio = () => {
     audio.play();
 }
 
+const createPlayerBattleCard = () => {
+
+    const playerBattle = $("<div class = 'playerBattle'>");
+
+    const spriteDiv = $("<div class = 'spriteDiv right'>");
+    const battleCard = $("<div class = 'battleCard left'>");
+    const backSprite = $(`<img src='${selectedPokemon[0].backSprite}'>`);
+    const p = $('<p>');
+
+    p.text(selectedPokemon[0].name.toUpperCase());
+    battleCard.append(p);    
+
+    spriteDiv.append(backSprite);
+
+    $(playerBattle).append(spriteDiv);
+    $(playerBattle).append(battleCard);
+    $('#battleContainer').append(playerBattle)
+}
+
+const createOppBattleCard = () => {
+    
+    const oppBattle = $("<div class = 'playerBattle'>");
+
+    const spriteDiv = $("<div class = 'spriteDiv left'>");
+    const battleCard = $("<div class = 'battleCard right'>");
+    const sprite = $(`<img src='${oppSelectedPokemon[0].sprite}'>`);
+    const p = $('<p>');
+
+    p.text(oppSelectedPokemon[0].name.toUpperCase());
+    battleCard.append(p);
+    
+    spriteDiv.append(sprite);
+
+    $(oppBattle).append(battleCard);
+    $(oppBattle).append(spriteDiv);
+    $('#battleContainer').append(oppBattle)
+    
+
+}
+
 
 /* START OF JQUERY */
 
@@ -247,25 +247,30 @@ $(() => {
         createOppBattleCard();
         createPlayerBattleCard();
 
-        const bar = ("<div class = 'bar'>");
-        const textBar = ("<div class = 'textBar'>");
-        const attackBar = ("<div class = 'attackBar'>");
+        const bar = $("<div class = 'bar'>");
+        const textBar = $("<div class = 'textBar'>");
+        const attackBar = $("<div class = 'attackBar'>");
+        const battleContainer = $('#battleContainer');
 
         const textP = $('<p>');
+        const textP2 = $('<p>');
+
         const attackP = $('<p>');
 
-        textP.text('fight');
+        textP.text('What will');
+        textP2.text(`${selectedPokemon[0].name.toUpperCase()} do?`);
+
         attackP.text('fight');
 
         $(textBar).append(textP);
+        $(textBar).append(textP2);
         $(attackBar).append(attackP);
 
-        $('#battleContainer').append(bar);
         $(bar).append(textBar);
         $(bar).append(attackBar);
 
+        $(battleContainer).append(bar);
 
 
     });
-
 });
