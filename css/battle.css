@@ -13,16 +13,21 @@
   /* FIRST DIV IS CORRECT SECOND DIV NEEDS FLOATS FLIPPED NEED TO MAKE AN ID AND TURN  */
 
 .left {
-    float: right;
-}
-
-.right {
     float: left;
 }
 
-.spiritDiv {
+.playerBattle {
+    position: relative;
+    height: 15.7em;
+}
+
+.right {
     float: right;
 }
+/* 
+.spiritDiv {
+    float: right;
+} */
 
 .spriteDiv img {
     height: 10em;

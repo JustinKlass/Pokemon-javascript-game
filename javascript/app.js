@@ -163,8 +163,8 @@ const createPlayerBattleCard = () => {
 
     const playerBattle = $("<div class = 'playerBattle'>");
 
-    const spriteDiv = $("<div class = 'spriteDiv right'>");
-    const battleCard = $("<div class = 'battleCard left'>");
+    const spriteDiv = $("<div class = 'spriteDiv left'>");
+    const battleCard = $("<div class = 'battleCard right'>");
     const backSprite = $(`<img src='${selectedPokemon[0].backSprite}'>`);
     const p = $('<p>');
 
@@ -182,8 +182,8 @@ const createOppBattleCard = () => {
     
     const oppBattle = $("<div class = 'playerBattle'>");
 
-    const spriteDiv = $("<div class = 'spriteDiv left'>");
-    const battleCard = $("<div class = 'battleCard right'>");
+    const spriteDiv = $("<div class = 'spriteDiv right'>");
+    const battleCard = $("<div class = 'battleCard left'>");
     const sprite = $(`<img src='${oppSelectedPokemon[0].sprite}'>`);
     const p = $('<p>');
 
