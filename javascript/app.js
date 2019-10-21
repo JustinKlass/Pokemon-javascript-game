@@ -54,7 +54,7 @@ const appendBox = (pokemon, pokemonBox, div, count) => {
     const name = $("<p class = 'pokemonName'>");
     const sprite = $(`<img src = ${pokemon.sprite} class = 'sprite'>`);
     const gender = $(`<img src = '${pokemon.gender}' class = 'gender'>`);
-    const healthBar = $("<div class = 'health-bar'>");
+    const healthBar = $("<div class = 'healthBar'>");
 
     const health = $("<p class = 'health'>");
     health.text(`${pokemon.currentHp}/${pokemon.hp}`);
@@ -161,15 +161,27 @@ const playAudio = () => {
 
 const createPlayerBattleCard = () => {
 
-    const playerBattle = $("<div class = 'playerBattle'>");
+    const playerBattle = $("<div class = 'playerBattle' id = 'card2'>");
 
     const spriteDiv = $("<div class = 'spriteDiv left'>");
-    const battleCard = $("<div class = 'battleCard right'>");
-    const backSprite = $(`<img src='${selectedPokemon[0].backSprite}'>`);
-    const p = $('<p>');
+    const battleCard = $("<div class = 'battleCard right' id = 'bottomSide'>");
+    const backSprite = $(`<img src='${selectedPokemon[0].backSprite}' id = 'yourSprite'>`);
+    const name = $("<p class = 'battleCardName'>");
+    const gender = $(`<img src = '${selectedPokemon[0].gender}'>`);
+    const lvl = $("<p class = 'lvl'>");
+    const healthBar = $("<div class = 'currentHealthBar'>");
+    const health = $("<p class = 'currentHealth'>");
 
-    p.text(selectedPokemon[0].name.toUpperCase());
-    battleCard.append(p);    
+    name.text(selectedPokemon[0].name.toUpperCase());
+    health.text(`${selectedPokemon[0].currentHp}/${selectedPokemon[0].hp}`);
+
+    lvl.text('Lv99');
+
+    battleCard.append(name);
+    battleCard.append(gender);
+    battleCard.append(lvl);    
+    battleCard.append(healthBar);
+    battleCard.append(health);
 
     spriteDiv.append(backSprite);
 
@@ -180,15 +192,25 @@ const createPlayerBattleCard = () => {
 
 const createOppBattleCard = () => {
     
-    const oppBattle = $("<div class = 'playerBattle'>");
+    const oppBattle = $("<div class = 'playerBattle' id = 'card1'>");
 
     const spriteDiv = $("<div class = 'spriteDiv right'>");
-    const battleCard = $("<div class = 'battleCard left'>");
-    const sprite = $(`<img src='${oppSelectedPokemon[0].sprite}'>`);
-    const p = $('<p>');
+    const battleCard = $("<div class = 'battleCard left' id = 'topSide'>");
+    const sprite = $(`<img src='${oppSelectedPokemon[0].sprite}' id = 'oppSprite'>`);
+    const name = $("<p class = 'battleCardName'>");
+    const gender = $(`<img src = '${oppSelectedPokemon[0].gender}'>`);
+    const lvl = $("<p class = 'lvl'>");
+    const healthBar = $("<div class = 'currentHealthBar'>");
 
-    p.text(oppSelectedPokemon[0].name.toUpperCase());
-    battleCard.append(p);
+    name.text(oppSelectedPokemon[0].name.toUpperCase());
+
+    lvl.text('Lv99');
+
+    battleCard.append(name);
+    battleCard.append(gender);
+    battleCard.append(lvl);
+    battleCard.append(healthBar);
+
     
     spriteDiv.append(sprite);
 
@@ -248,28 +270,34 @@ $(() => {
         createPlayerBattleCard();
 
         const bar = $("<div class = 'bar'>");
-        const textBar = $("<div class = 'textBar'>");
-        const attackBar = $("<div class = 'attackBar'>");
+        const leftBorder = $("<div class = 'leftBorder'>");
+        const leftBar = $("<div class = 'leftBar'>");
+        const rightBar = $("<div class = 'rightBar'>");
+        const rightBorder = $("<div class = 'rightBorder'>");
         const battleContainer = $('#battleContainer');
 
-        const textP = $('<p>');
-        const textP2 = $('<p>');
+        const leftP = $('<p>');
+        const leftP2 = $('<p>');
 
-        const attackP = $('<p>');
+        const rightP = $('<p>');
 
-        textP.text('What will');
-        textP2.text(`${selectedPokemon[0].name.toUpperCase()} do?`);
+        leftP.text('What will');
+        leftP2.text(`${selectedPokemon[0].name.toUpperCase()} do?`);
 
-        attackP.text('fight');
+        rightP.text('FIGHT');
 
-        $(textBar).append(textP);
-        $(textBar).append(textP2);
-        $(attackBar).append(attackP);
+        $(leftBar).append(leftP);
+        $(leftBar).append(leftP2);
+        $(rightBar).append(rightP);
 
-        $(bar).append(textBar);
-        $(bar).append(attackBar);
+        $(leftBorder).append(leftBar);
+        $(rightBorder).append(rightBar);
+
+        $(bar).append(leftBorder);
+        $(bar).append(rightBorder);
 
         $(battleContainer).append(bar);
+        setTimeout(scrollWindow(bar), 5000);
 
 
     });

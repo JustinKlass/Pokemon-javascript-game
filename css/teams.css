@@ -101,7 +101,7 @@
     text-shadow: 1px 1px 1.5px black;
 }
 
-.health-bar {
+.healthBar {
     width: 9em;
     height: 0.75em;
     margin-top: 0.15em;
