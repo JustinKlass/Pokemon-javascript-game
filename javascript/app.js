@@ -337,8 +337,16 @@ const playerAttack = () => {
 
     
     if(oppSelectedPokemon[0].currentHp <= 0) {
-        alert('game over!');
-        gameOver === 0;
+        gameOver = 0;
+        setTimeout(function() {
+            alert('The opponent\'s pokemon fainted... Game Over!');
+            $('.spriteDiv').remove('#yoppSprite');
+        }, 3000);
+        setTimeout(function() {
+            $('#battleContainer').remove();
+            $('body').append($('<div id = #battleContainer>'));
+        }, 4000);
+
     }
 
     setTimeout(function() {
@@ -388,8 +396,15 @@ const oppAttack = () => {
     }, 1500);   
 
     if(selectedPokemon[0].currentHp <= 0) {
-        alert('gameOver!');
-        gameOver === 0;
+        gameOver = 0;
+        setTimeout(function() {
+            alert('Your pokemon fainted... Game Over!');
+            $('.spriteDiv').remove('#yourSprite');
+        }, 3000);
+        setTimeout(function() {
+            $('#battleContainer').remove();
+            $('body').append($('<div id = #battleContainer>'));
+        }, 4000);
     }
 
     setTimeout(function() {
@@ -467,7 +482,7 @@ $(() => {
         yourPokemon();
         oppPokemon();
 
-        // playAudio();
+        playAudio();
 
         createOppBattleCard();
         createPlayerBattleCard();
@@ -488,6 +503,8 @@ $(() => {
     $('body').on('click', '#attack1', (event) => {
         if(gameOver === 1) {
         playerAttack();
+        }
+        if(gameOver === 1) {
         setTimeout(oppAttack, 5000);
         }
     });

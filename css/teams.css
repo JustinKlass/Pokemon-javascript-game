@@ -19,8 +19,8 @@
 }
 
 #create, #confirm {
-    margin-left: 40%;
-    width: 20%;
+    margin-left: 37.5%;
+    width: 25%;
     height: 2.5em;
     font-size: 1.5rem;
     border-radius: 30em;
@@ -57,9 +57,9 @@
 
 .pokemonBox1 p, .pokemonBox2 p {
     color: white;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     padding-bottom: .25em;
-    letter-spacing: .05em;;
+    letter-spacing: .05em;
     text-shadow: 1px 1px 1.5px black;
 }
 
@@ -69,8 +69,8 @@
 
 .sprite {
     float: left;
-    width: 5em;
-    height: 5em;
+    width: 30%;
+    height: 30%;
     margin-left: 0.5em;
 }
 
@@ -81,11 +81,11 @@
 }
 
 #team1 {
-    margin-left: 1em;
+    margin-left: 3%;
 }
 
 #team2 {
-    margin-left: 5em;
+    margin-left: 3%;
 }
 
 .gender {
@@ -97,15 +97,16 @@
 }
 
 .health {
-    margin: 0 0 0 13em;
+    /* margin: 0 0 0 13rem; */
+    margin: 0 0 0 75%;
     text-shadow: 1px 1px 1.5px black;
 }
 
 .healthBar {
-    width: 9em;
+    width: 58%;
     height: 0.75em;
     margin-top: 0.15em;
-    border-radius: 30px;
+    border-radius: 1.5em;
     margin-bottom: 0.05em;
     display: inline-block;
     border: 3px solid black;
@@ -118,7 +119,134 @@
 }
 
 .teamH1 {
+      font-size: 2rem;
       color: white;
       text-align: center;
       text-shadow: 1px 1px 1.5px black;
+}
+
+@media (max-width: 800px) {
+    #create, #confirm {
+        margin-left: 35%;
+        width: 30%;
+        font-size: 0.25rem;
+    }
+
+    .teamH1 {
+        color: white;
+        text-align: center;
+        font-size: 1rem;
+        text-shadow: 1px 1px 1.5px black;
+    }
+
+    #team1, #team2 {
+        width: 100%;
+        margin-bottom: 4%;
+        display: block;
+    }
+
+    #team1 {
+        margin-left: 0;
+    }
+
+    #team2 {
+        margin-left: 0;
+
+    }
+
+    .row0, .row1, .row2 {
+        display: block;
+        margin-left: 0.75em;
+        margin-bottom: 1em;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    #create, #confirm {
+        width: 30%;
+        margin-left: 35%;
+        font-size: 0.25rem;
+    }
+    
+    .teamH1 {
+        color: white;
+        text-align: center;
+        font-size: 1rem;
+        text-shadow: 1px 1px 1.5px black;
+    }
+    
+    #team1, #team2 {
+        width: 100%;
+        margin-bottom: 4%;
+        display: block;
+    }
+    
+    #team1 {
+        margin-left: 0;
+    }
+    
+    #team2 {
+        margin-left: 0;
+    }
+    
+    .row0, .row1, .row2 {
+        display: block;
+        margin-left: 2%;
+        margin-bottom: 1em;
+    }
+
+    .pokemonBox1, .pokemonBox2 {
+
+        width: 40%;
+        height: 20%;
+        opacity: 0.75;
+        border-radius: 5%;
+        display: inline-block;
+        border: 0.20em solid green;
+        background-image: linear-gradient(darkGreen, lightGreen);
+    }
+
+    .pokemonBox1 p, .pokemonBox2 p {
+        color: white;
+        font-size: 0.5rem;
+        padding-bottom: .25em;
+        letter-spacing: .05em;
+        text-shadow: 1px 1px 1.5px black;
+    }
+
+    .gender {
+        width: 0.75em;
+        height: 0.75em;
+        float: right;
+        padding-top: 0.6em;
+        padding-right: 0.6em;
+    }
+    .health {
+        margin: 0.2rem 0 0 0.5rem;
+        font-size: 0.1rem;
+        display: inline-block;
+        float: left;
+        text-shadow: 1px 1px 1.5px black;
+    }
+
+    .healthBar {
+        width: 58%;
+        height: 0.6rem;
+        border-radius: 1.5rem;
+        margin: 0.4rem 0.2rem 0.5rem 0;
+        float: right;
+        display: inline-block;
+        border: 3px solid black;
+        background-color: #93CBA3;
+        }
+
+    .sprite {
+        float: left;
+        width: 20%;
+        height: 20%;
+        margin-left: 0.5em;
+    }
+
 }
