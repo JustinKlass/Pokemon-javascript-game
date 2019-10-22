@@ -17,8 +17,8 @@ class getPokemonStats {
 const yourList = [];
 const oppList =[];
 
-const selectedPokemon = [];
-const oppSelectedPokemon = [];
+let selectedPokemon = [];
+let oppSelectedPokemon = [];
 
 const yourSelectedId = [];
 let gameOver = 1;
@@ -158,6 +158,8 @@ const yourPokemon = () => {
 }
 
 const playAudio = () => {
+    const audioTag = $("<audio src='../audio/pokemon-battle.mp3' id='audio'>");
+    $('#battleContainer').append(audioTag);
     const audio = document.getElementById('audio');
     audio.play();
 }
@@ -349,12 +351,8 @@ const playerAttack = () => {
         gameOver = 0;
         setTimeout(function() {
             alert('The opponent\'s pokemon fainted... Game Over!');
-            $('.spriteDiv').remove('#oppSprite');
+            $('#oppSprite').remove();
         }, 4000);
-        setTimeout(function() {
-            $('#battleContainer').remove();
-            $('body').append($('<div id = #battleContainer>'));
-        }, 7000);
     }
 }
 
@@ -398,12 +396,8 @@ const oppAttack = () => {
     if(selectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('.spriteDiv').remove('#yourSprite');
+            $('#yourSprite').remove();
         }, 4000);
-        setTimeout(function() {
-            $('#battleContainer').remove();
-            $('body').append($('<div id = #battleContainer>'));
-        }, 7000);
     }
 
     setTimeout(function() {
@@ -483,5 +477,14 @@ $(() => {
         if(gameOver === 1) {
         setTimeout(oppAttack, 5000);
         }
+    });
+
+    $('body').on('click', '#run', (event) => {
+        $('#battleContainer').remove();
+        const battleContainer = $("<div id = 'battleContainer'>");
+        $('body').append(battleContainer);
+
+        selectedPokemon = [];
+        oppSelectedPokemon = [];
     });
 });

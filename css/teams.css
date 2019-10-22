@@ -26,6 +26,7 @@
     border-radius: 30em;
     color: white;
     text-align: center;
+    outline: none;
     text-shadow: 1px 1px 1.5px black;
     border: 0.3em solid #0D5FBA;
     background-color: #FFCA06;
