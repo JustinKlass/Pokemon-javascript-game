@@ -1,5 +1,5 @@
 class getPokemonStats {
-    constructor(name, hp, sprite, backSprite, gender, id) {
+    constructor(name, hp, sprite, backSprite, gender, id, attack1, attack2, attack3, attack4) {
         this.name = name;
         this.id = id;
         this.currentHp = hp;
@@ -7,10 +7,10 @@ class getPokemonStats {
         this.sprite = sprite;
         this.backSprite = backSprite;
         this.gender = gender;
-        this.attack1 = [2, 3, 15];
-        this.attack2 = [5, 6, 10];
-        this.attack3 = [8];
-        this.attack4 = [7, 9];
+        this.attack1 = [attack1, 20, 40, 60];
+        this.attack2 = [attack2, 5, 10, 20];
+        this.attack3 = [attack3, 5, 10, 20];
+        this.attack4 = [attack4, 5, 10, 20];
     }
 }
 
@@ -21,6 +21,7 @@ const selectedPokemon = [];
 const oppSelectedPokemon = [];
 
 const yourSelectedId = [];
+let gameOver = 1;
 
 const getRandomGender = () => {
     if( Math.random() < 0.5) {
@@ -87,14 +88,16 @@ const makePokemon = (randomId, div, pokemonBox, count, arrayName) => {
             data.sprites.front_default, 
             data.sprites.back_default, 
             getRandomGender(), 
-            data.id
+            data.id,
+            data.moves[0].move.name,
+            data.moves[1].move.name,
+            data.moves[2].move.name,
+            data.moves[3].move.name
         );
 
         arrayName.push(pokemon);
         appendBox(pokemon, pokemonBox, div, count);
-
     });
-
 };
 
 const makeTeam = (teamNum, count, arrayName) => {
@@ -169,7 +172,8 @@ const createPlayerBattleCard = () => {
     const name = $("<p class = 'battleCardName'>");
     const gender = $(`<img src = '${selectedPokemon[0].gender}'>`);
     const lvl = $("<p class = 'lvl'>");
-    const healthBar = $("<div class = 'currentHealthBar'>");
+    const backHealthBar = $("<div class = 'currentHealthBar'>");
+    const healthBar = $("<div id = 'playerUpdatedHealthBar'>");
     const health = $("<p class = 'currentHealth'>");
 
     name.text(selectedPokemon[0].name.toUpperCase());
@@ -177,10 +181,11 @@ const createPlayerBattleCard = () => {
 
     lvl.text('Lv99');
 
+    backHealthBar.append(healthBar);
     battleCard.append(name);
     battleCard.append(gender);
     battleCard.append(lvl);    
-    battleCard.append(healthBar);
+    battleCard.append(backHealthBar);
     battleCard.append(health);
 
     spriteDiv.append(backSprite);
@@ -200,16 +205,19 @@ const createOppBattleCard = () => {
     const name = $("<p class = 'battleCardName'>");
     const gender = $(`<img src = '${oppSelectedPokemon[0].gender}'>`);
     const lvl = $("<p class = 'lvl'>");
-    const healthBar = $("<div class = 'currentHealthBar'>");
+
+    const backHealthBar = $("<div class = 'currentHealthBar'>");
+    const healthBar = $("<div id = 'oppUpdatedHealthBar'>");
 
     name.text(oppSelectedPokemon[0].name.toUpperCase());
 
     lvl.text('Lv99');
 
+    backHealthBar.append(healthBar);
     battleCard.append(name);
     battleCard.append(gender);
-    battleCard.append(lvl);
-    battleCard.append(healthBar);
+    battleCard.append(lvl);    
+    battleCard.append(backHealthBar);
 
     
     spriteDiv.append(sprite);
@@ -218,6 +226,204 @@ const createOppBattleCard = () => {
     $(oppBattle).append(spriteDiv);
     $('#battleContainer').append(oppBattle)
     
+
+}
+
+const createLeftBar = (bar) => {
+
+    const leftBorder = $("<div class = 'leftBorder'>");
+    const leftBar = $("<div class = 'leftBar'>");
+
+    const leftP = $('<p>');
+    const leftP2 = $('<p>');
+
+    leftP.text('What will');
+    leftP2.text(`${selectedPokemon[0].name.toUpperCase()} do?`);
+
+    $(leftBar).append(leftP);
+    $(leftBar).append(leftP2);
+
+    $(leftBorder).append(leftBar);
+
+    $(bar).append(leftBorder);
+}
+
+const createRightBar = (bar) => {
+
+    const rightBar = $("<div class = 'rightBar'>");
+    const rightBorder = $("<div class = 'rightBorder'>");
+
+    const rightB1 = $("<button class = 'button' id = 'fight'>");
+    const rightB2 = $("<button class = 'button' id = 'bag'>");
+    const buttonRow1 = $("<div class = 'buttonRow1'>")
+
+    const rightB3 = $("<button class = 'button' id = 'pokemonStorage'>");
+    const rightB4 = $("<button class = 'button' id = 'run'>");
+    const buttonRow2 = $("<div class = 'buttonRow2'>")
+
+    rightB1.text('FIGHT');
+    rightB2.text('BAG');
+    rightB3.text('POKEMON');
+    rightB4.text('RUN');
+
+    $(buttonRow1).append(rightB1);
+    $(buttonRow1).append(rightB2);
+    $(buttonRow2).append(rightB3);
+    $(buttonRow2).append(rightB4);
+
+    $(rightBar).append(buttonRow1);
+    $(rightBar).append(buttonRow2);
+
+    $(rightBorder).append(rightBar);
+
+    $(bar).append(rightBorder);
+}
+
+const createAttackMenu = () => {
+
+    $('.leftBar').empty();
+
+    const attack1 = $("<button class = 'attackButton' id = 'attack1'>");
+    const attack2 = $("<button class = 'attackButton' id = 'attack2'>");
+    const buttonRow1 = $("<div class = 'attackButtonRow1'>")
+
+    const attack3 = $("<button class = 'attackButton' id = 'attack3'>");
+    const attack4 = $("<button class = 'attackButton' id = 'attack4'>");
+    const buttonRow2 = $("<div class = 'attackButtonRow2'>")
+
+    attack1.text(`${selectedPokemon[0].attack1[0]}`.toUpperCase());
+    attack2.text(`${selectedPokemon[0].attack2[0]}`.toUpperCase());
+    attack3.text(`${selectedPokemon[0].attack3[0]}`.toUpperCase());
+    attack4.text(`${selectedPokemon[0].attack4[0]}`.toUpperCase());
+
+    $(buttonRow1).append(attack1);
+    $(buttonRow1).append(attack2);
+    $(buttonRow2).append(attack3);
+    $(buttonRow2).append(attack4);
+
+    $('.leftBar').append(buttonRow1);
+    $('.leftBar').append(buttonRow2);
+
+    $('.leftBorder').css('background', 'white');
+
+    $('.leftBorder').append($('.leftBar'));
+}
+
+const playerAttack = () => {
+
+    $('.leftBar').empty();
+
+    const p = $("<p class = 'attackText'>");
+
+    p.text(`${selectedPokemon[0].name} used ${selectedPokemon[0].attack1[0]}`);
+    $('.leftBar').append(p);
+
+    let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
+    const damage = selectedPokemon[0].attack1[randDmg];
+    oppSelectedPokemon[0].currentHp -= damage;
+
+    attackNum = damage;
+
+    let a = (oppSelectedPokemon[0].currentHp * 100) / oppSelectedPokemon[0].hp;
+
+    setTimeout(function() {
+
+        $('.leftBar').empty(); 
+        p.empty();
+        upperName = selectedPokemon[0].name.toUpperCase();
+        upperAttack = selectedPokemon[0].attack1[0].toUpperCase();
+        p.val(upperName + ' used ' + upperAttack);
+    }, 1500);
+
+    
+    if(oppSelectedPokemon[0].currentHp <= 0) {
+        alert('game over!');
+        gameOver === 0;
+    }
+
+    setTimeout(function() {
+
+        $('.leftBar').empty();
+        $('.leftBar').append(p);
+        p.text(`It\'s super effective!`);
+        
+        $('#oppUpdatedHealthBar').animate({
+            'width': a + "%"
+        }, 700);
+
+        if(oppSelectedPokemon[0].currentHp < (oppSelectedPokemon[0].hp / 2) && oppSelectedPokemon[0].currentHp > (oppSelectedPokemon[0].hp / 4)) {
+            $('#oppUpdatedHealthBar').css('background-color', '#E6C916');
+        }
+    
+        else if(oppSelectedPokemon[0].currentHp <= (oppSelectedPokemon[0].hp / 4)) {
+            $('#oppUpdatedHealthBar').css('background-color', '#FD5439');
+        }
+    }, 2500);
+
+
+}
+
+const oppAttack = () => {
+
+    $('.leftBar').empty();
+
+    const p = $("<p class = 'attackText'>");
+
+    p.text(`${oppSelectedPokemon[0].name} used ${oppSelectedPokemon[0].attack1[0]}`);
+    $('.leftBar').append(p);
+
+    let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
+    const damage = oppSelectedPokemon[0].attack1[randDmg];
+    selectedPokemon[0].currentHp -= damage;
+
+    let a = (selectedPokemon[0].currentHp * 100) / selectedPokemon[0].hp;
+
+
+    setTimeout(function() {
+        $('.leftBar').empty()
+        p.empty();
+        upperName = selectedPokemon[0].name.toUpperCase();
+        upperAttack = selectedPokemon[0].attack1[0].toUpperCase();
+        p.text(upperName + ' used ' + upperAttack);
+    }, 1500);   
+
+    if(selectedPokemon[0].currentHp <= 0) {
+        alert('gameOver!');
+        gameOver === 0;
+    }
+
+    setTimeout(function() {
+        $('.leftBar').empty();
+        $('.leftBar').append(p);
+        p.text(`It\'s super effective!`);
+
+        $('#playerUpdatedHealthBar').animate({
+            'width': a + "%"
+        }, 700);
+
+        if(selectedPokemon[0].currentHp < (selectedPokemon[0].hp / 2) && selectedPokemon[0].currentHp > (selectedPokemon[0].hp / 4)) {
+            $('#playerUpdatedHealthBar').css('background-color', '#E6C916');
+        }
+        else if(selectedPokemon[0].currentHp <= (selectedPokemon[0].hp / 4)) {
+            $('#playerUpdatedHealthBar').css('background-color', '#FD5439');
+        }
+        const currentHealth = $('.currentHealth');
+
+        currentHealth.text((selectedPokemon[0].currentHp) + '/ ' + selectedPokemon[0].hp);
+        
+        // p.empty();
+        // p.text(`It\'s super effective!`);
+    }, 2500);
+
+    setTimeout(function() {
+
+        const bar = $('.bar');
+        $('.leftBorder').remove();
+        $('.rightBorder').remove();
+        createLeftBar(bar);
+        createRightBar(bar);
+         
+    }, 4000);
 
 }
 
@@ -263,42 +469,26 @@ $(() => {
 
         // playAudio();
 
-        console.log(selectedPokemon);
-        console.log(oppSelectedPokemon);
-
         createOppBattleCard();
         createPlayerBattleCard();
 
-        const bar = $("<div class = 'bar'>");
-        const leftBorder = $("<div class = 'leftBorder'>");
-        const leftBar = $("<div class = 'leftBar'>");
-        const rightBar = $("<div class = 'rightBar'>");
-        const rightBorder = $("<div class = 'rightBorder'>");
         const battleContainer = $('#battleContainer');
+        const bar = $("<div class = 'bar'>");
 
-        const leftP = $('<p>');
-        const leftP2 = $('<p>');
-
-        const rightP = $('<p>');
-
-        leftP.text('What will');
-        leftP2.text(`${selectedPokemon[0].name.toUpperCase()} do?`);
-
-        rightP.text('FIGHT');
-
-        $(leftBar).append(leftP);
-        $(leftBar).append(leftP2);
-        $(rightBar).append(rightP);
-
-        $(leftBorder).append(leftBar);
-        $(rightBorder).append(rightBar);
-
-        $(bar).append(leftBorder);
-        $(bar).append(rightBorder);
+        createLeftBar(bar);
+        createRightBar(bar);
 
         $(battleContainer).append(bar);
-        setTimeout(scrollWindow(bar), 5000);
+    });
 
+    $('body').on('click', '#fight', (event) => {
+        createAttackMenu();
+    });
 
+    $('body').on('click', '#attack1', (event) => {
+        if(gameOver === 1) {
+        playerAttack();
+        setTimeout(oppAttack, 5000);
+        }
     });
 });
