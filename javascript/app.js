@@ -316,16 +316,28 @@ const playerAttack = () => {
     $('.leftBar').empty();
 
     const p = $("<p class = 'attackText'>");
-
-    p.text(`${selectedPokemon[0].name} used ${selectedPokemon[0].attack1[0]}`);
+    p.text(`${selectedPokemon[0].name.toUpperCase()} used ${selectedPokemon[0].attack1[0].toUpperCase()}`);
     $('.leftBar').append(p);
+
+
+
+
+    setTimeout(function() {
+        $('#yourSprite').addClass('yourAttackAnimation');
+    }, 500);
+    setTimeout(function() {
+        $('#oppSprite').addClass('blink');
+    }, 1000);
+
+
+    
 
     let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
     const damage = selectedPokemon[0].attack1[randDmg];
+
     oppSelectedPokemon[0].currentHp -= damage;
 
     attackNum = damage;
-
     let a = (oppSelectedPokemon[0].currentHp * 100) / oppSelectedPokemon[0].hp;
 
     setTimeout(function() {
@@ -345,7 +357,11 @@ const playerAttack = () => {
         else if(oppSelectedPokemon[0].currentHp <= (oppSelectedPokemon[0].hp / 4)) {
             $('#oppUpdatedHealthBar').css('background-color', '#FD5439');
         }
-    }, 2500);
+
+        $('#yourSprite').removeClass('yourAttackAnimation');
+        $('#oppSprite').removeClass('blink');
+
+    }, 2250);
 
     if(oppSelectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
@@ -362,8 +378,10 @@ const oppAttack = () => {
 
     const p = $("<p class = 'attackText'>");
 
-    p.text(`${oppSelectedPokemon[0].name} used ${oppSelectedPokemon[0].attack1[0]}`);
+    p.text(`${oppSelectedPokemon[0].name.toUpperCase()} used ${oppSelectedPokemon[0].attack1[0].toUpperCase()}`);
     $('.leftBar').append(p);
+
+    $('#oppSprite').addClass('oppAttackAnimation');
 
     let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
     const damage = oppSelectedPokemon[0].attack1[randDmg];
@@ -384,12 +402,16 @@ const oppAttack = () => {
         if(selectedPokemon[0].currentHp < (selectedPokemon[0].hp / 2) && selectedPokemon[0].currentHp > (selectedPokemon[0].hp / 4)) {
             $('#playerUpdatedHealthBar').css('background-color', '#E6C916');
         }
+
         else if(selectedPokemon[0].currentHp <= (selectedPokemon[0].hp / 4)) {
             $('#playerUpdatedHealthBar').css('background-color', '#FD5439');
         }
+
         const currentHealth = $('.currentHealth');
 
         currentHealth.text((selectedPokemon[0].currentHp) + '/ ' + selectedPokemon[0].hp);
+
+        $('#oppSprite').removeClass('oppAttackAnimation');
         
     }, 2500);
 
@@ -454,8 +476,12 @@ $(() => {
 
         playAudio();
 
+
+        scrollWindow('#battleContainer');
+
         createOppBattleCard();
         createPlayerBattleCard();
+
 
         const battleContainer = $('#battleContainer');
         const bar = $("<div class = 'bar'>");
@@ -464,6 +490,7 @@ $(() => {
         createRightBar(bar);
 
         $(battleContainer).append(bar);
+
     });
 
     $('body').on('click', '#fight', (event) => {

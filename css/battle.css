@@ -24,7 +24,7 @@
 }
 
 #card1 {
-    height: 15em;
+    height: 17em;
 }
 
 #card2 {
@@ -32,19 +32,37 @@
 }
 
 #yourSprite {
-    left: 8%;
-    width: 20em;
-    bottom: -40%;
-    height: 20em;
-    position: absolute;
+    margin-left: 8rem;
+    width: 20rem;
+    bottom: -20%;
+    height: 20rem;
+    position: relative;
+}
+
+.yourAttackAnimation {
+    -webkit-animation-name: playerAttack;
+    -webkit-animation-duration: 0.5s;
+    -webkit-animation-iteration-count: 1;
+    animation-name: playerAttack;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
 }
 
 #oppSprite {
-    right: 11%;
-    width: 14em;
-    bottom: -13%;
-    height: 14em;
-    position: absolute;
+    margin-right: 9rem;
+    width: 14rem;
+    margin-top: 4rem;
+    height: 14rem;
+    position: relative;
+}
+
+.oppAttackAnimation {
+    -webkit-animation-name: oppAttack;
+    -webkit-animation-duration: 0.5s;
+    -webkit-animation-iteration-count: 1;
+    animation-name: oppAttack;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
 }
 
 #battleContainer {
@@ -64,7 +82,7 @@
 
 .battleCard p {
     color: black;
-    font-size: 1rem;
+    font-size: 0.99rem;
     letter-spacing: .05em;
     font-family: 'pokemon-font';
     text-shadow: 1px 1px 1.5px white;
@@ -216,6 +234,102 @@
     position: relative;
     background-color: #93CBA3;
 }
+ 
+@-webkit-keyframes playerAttack {
+
+  0%   {background-color:red; left:0px; bottom:0px;}
+  50%  {background-color:blue; left:50px; bottom:50px;}
+  100% {background-color:red; left:0px; bottom:0px;}
+}
+
+@keyframes playerAttack {
+
+    0%   {background-color:red; left:0px; bottom:0px;}
+    50%  {background-color:blue; left:50px; bottom:50px;}
+    100% {background-color:red; left:0px; bottom:0px;}
+}
+
+@-webkit-keyframes oppAttack {
+
+    0%   {background-color:red; right:0px; top:0px;}
+    50%  {background-color:blue; right:50px; top:50px;}
+    100% {background-color:red; right:0px; top:0px;}
+}
+
+@keyframes oppAttack {
+
+    0%   {background-color:red; right:0px; top:0px;}
+    50%  {background-color:blue; right:50px; top:50px;}
+    100% {background-color:red; right:0px; top:0px;}
+}
+
+
+@-moz-keyframes blink {
+    0% {
+        opacity: 100;
+    }
+    49% {
+        opacity: 100;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+} 
+
+@-webkit-keyframes blink {
+    0% {
+        opacity: 100;
+    }
+    49% {
+        opacity: 100;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-ms-keyframes blink {
+    0% {
+        opacity: 100;
+    }
+    49% {
+        opacity: 100;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+} 
+
+@keyframes blink {
+    0% {
+        opacity: 100;
+    }
+    49% {
+        opacity: 100;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+} 
+
+.blink {
+    -moz-animation: blink normal 0.25s 2; /* Firefox */
+    -webkit-animation: blink normal 0.25s 2; /* Webkit */
+    -ms-animation: blink normal 0.25s 2; /* IE */
+    animation: blink normal 0.25s 2; /* Opera and prob css3 final iteration */
+}
 
 @media (max-width: 800px) {
 
@@ -240,29 +354,29 @@
     }
 
     #card2 {
-        height: 8rem;
-        padding-bottom: 0.5rem;
+        height: 10rem;
+        padding-bottom: 0.2rem;
     } 
 
     #yourSprite {
-        margin-left: 8%;
+        margin-top: 1.5rem;
+        margin-left: 5rem;
         width: 10em;
         height: 10em;
-        margin-bottom: 3%;
-        position: absolute;
+        position: relative;
     }
         
     #oppSprite {
         width: 8rem;
         height: 8rem; 
-        margin-bottom: 8%;
-        margin-right: 4%;
-        position: absolute;
+        margin-top: 1.5rem;
+        margin-right: 6rem;
+        position: relative;
     }
 
     #bottomSide {
         height: 6rem;
-        margin-top: 1.5rem;
+        margin-top: 3rem;
         margin-right: 4rem;
     }
 
@@ -361,16 +475,18 @@
     #yourSprite {
         width: 7em;
         height: 7em;
-        margin-top: 1rem;
+        margin-left: 0.5rem;
+        margin-top: 1.5rem;
+
         position: relative;
     }
         
     #oppSprite {
         width: 6rem;
         height: 6rem; 
-        margin-bottom: 15%;
-        margin-right: 3%;
-        position: absolute;
+        margin-top: 0.5 rem;
+        margin-right: 1.5rem;
+        position: relative;
     }
 
     #bottomSide {
