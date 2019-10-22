@@ -328,29 +328,6 @@ const playerAttack = () => {
 
     setTimeout(function() {
 
-        $('.leftBar').empty(); 
-        p.empty();
-        upperName = selectedPokemon[0].name.toUpperCase();
-        upperAttack = selectedPokemon[0].attack1[0].toUpperCase();
-        p.val(upperName + ' used ' + upperAttack);
-    }, 1500);
-
-    
-    if(oppSelectedPokemon[0].currentHp <= 0) {
-        gameOver = 0;
-        setTimeout(function() {
-            alert('The opponent\'s pokemon fainted... Game Over!');
-            $('.spriteDiv').remove('#yoppSprite');
-        }, 3000);
-        setTimeout(function() {
-            $('#battleContainer').remove();
-            $('body').append($('<div id = #battleContainer>'));
-        }, 4000);
-
-    }
-
-    setTimeout(function() {
-
         $('.leftBar').empty();
         $('.leftBar').append(p);
         p.text(`It\'s super effective!`);
@@ -368,7 +345,17 @@ const playerAttack = () => {
         }
     }, 2500);
 
-
+    if(oppSelectedPokemon[0].currentHp <= 0) {
+        gameOver = 0;
+        setTimeout(function() {
+            alert('The opponent\'s pokemon fainted... Game Over!');
+            $('.spriteDiv').remove('#oppSprite');
+        }, 4000);
+        setTimeout(function() {
+            $('#battleContainer').remove();
+            $('body').append($('<div id = #battleContainer>'));
+        }, 7000);
+    }
 }
 
 const oppAttack = () => {
@@ -386,28 +373,8 @@ const oppAttack = () => {
 
     let a = (selectedPokemon[0].currentHp * 100) / selectedPokemon[0].hp;
 
-
     setTimeout(function() {
-        $('.leftBar').empty()
-        p.empty();
-        upperName = selectedPokemon[0].name.toUpperCase();
-        upperAttack = selectedPokemon[0].attack1[0].toUpperCase();
-        p.text(upperName + ' used ' + upperAttack);
-    }, 1500);   
 
-    if(selectedPokemon[0].currentHp <= 0) {
-        gameOver = 0;
-        setTimeout(function() {
-            alert('Your pokemon fainted... Game Over!');
-            $('.spriteDiv').remove('#yourSprite');
-        }, 3000);
-        setTimeout(function() {
-            $('#battleContainer').remove();
-            $('body').append($('<div id = #battleContainer>'));
-        }, 4000);
-    }
-
-    setTimeout(function() {
         $('.leftBar').empty();
         $('.leftBar').append(p);
         p.text(`It\'s super effective!`);
@@ -426,9 +393,18 @@ const oppAttack = () => {
 
         currentHealth.text((selectedPokemon[0].currentHp) + '/ ' + selectedPokemon[0].hp);
         
-        // p.empty();
-        // p.text(`It\'s super effective!`);
     }, 2500);
+
+    if(selectedPokemon[0].currentHp <= 0) {
+        gameOver = 0;
+        setTimeout(function() {
+            $('.spriteDiv').remove('#yourSprite');
+        }, 4000);
+        setTimeout(function() {
+            $('#battleContainer').remove();
+            $('body').append($('<div id = #battleContainer>'));
+        }, 7000);
+    }
 
     setTimeout(function() {
 
@@ -438,7 +414,7 @@ const oppAttack = () => {
         createLeftBar(bar);
         createRightBar(bar);
          
-    }, 4000);
+    }, 7000);
 
 }
 
