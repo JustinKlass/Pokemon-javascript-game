@@ -8,9 +8,6 @@
     /* There is no SVG version of this font due to support being dropped in SVG 2 */
   }
 
-
-
-  /* FIRST DIV IS CORRECT SECOND DIV NEEDS FLOATS FLIPPED NEED TO MAKE AN ID AND TURN  */
 .playerBattle {
     position: relative;
     overflow: hidden;

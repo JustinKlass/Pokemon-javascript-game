@@ -346,7 +346,7 @@ const playerAttack = () => {
         $('.leftBar').empty();
         $('.leftBar').append(p);
         p.text(`It\'s super effective!`);
-        
+
         $('#oppUpdatedHealthBar').animate({
             'width': a + "%"
         }, 700);
