@@ -7,10 +7,10 @@ class getPokemonStats {
         this.sprite = sprite;
         this.backSprite = backSprite;
         this.gender = gender;
-        this.attack1 = [attack1, 20, 40, 60];
-        this.attack2 = [attack2, 5, 10, 20];
-        this.attack3 = [attack3, 5, 10, 20];
-        this.attack4 = [attack4, 5, 10, 20];
+        this.attack1 = [attack1, 15, 30, 60];
+        this.attack2 = [attack2, 15, 30, 60];
+        this.attack3 = [attack3, 15, 30, 60];
+        this.attack4 = [attack4, 15, 30, 60];
     }
 }
 
@@ -22,6 +22,7 @@ let oppSelectedPokemon = [];
 
 const yourSelectedId = [];
 let gameOver = 1;
+let randPokemon;
 
 const getRandomGender = () => {
     if( Math.random() < 0.5) {
@@ -33,27 +34,26 @@ const getRandomGender = () => {
 }
 /* GETS RANDOM NUMBER BETWEEN 1 803 TO GET A RANDOM POKEMON */
 const getRandomId = (input) => {
-    let randPokemon;
 
-    if(input.text() === 1) {
+    if(input === '1') {
         randPokemon = Math.floor(Math.random() * Math.floor(151)) + 1;
     }
-    else if(input === 2) {
+    else if(input === '2') {
         randPokemon = Math.floor(Math.random() * (255 - 152)) + 152;
     }
-    else if(input === 3) {
+    else if(input === '3') {
         randPokemon = Math.floor(Math.random() * (387 - 252)) + 252;
     }
-    else if(input === 4) {
+    else if(input === '4') {
         randPokemon = Math.floor(Math.random() * (494 - 387)) + 387;
     }
-    else if(input === 5) {
+    else if(input === '5') {
         randPokemon = Math.floor(Math.random() * (650 - 494)) + 494;
     }
-    else if(input === 6) {
+    else if(input === '6') {
         randPokemon = Math.floor(Math.random() * (721 - 650)) + 650;
     }
-    else if(input === 7) {
+    else if(input === '7') {
         randPokemon = Math.floor(Math.random() * (803 - 721)) + 721;
     }
     else if(input === 'All') {
@@ -114,13 +114,15 @@ const makePokemon = (randomId, div, pokemonBox, count, arrayName) => {
             data.sprites.back_default, 
             getRandomGender(), 
             data.id,
-            data.moves[0].move.name,
-            data.moves[1].move.name,
-            data.moves[2].move.name,
-            data.moves[3].move.name
+            data.moves[Math.floor(Math.random() * (data.moves.length - 1))].move.name,
+            data.moves[Math.floor(Math.random() * (data.moves.length - 1))].move.name,
+            data.moves[Math.floor(Math.random() * (data.moves.length - 1))].move.name,
+            data.moves[Math.floor(Math.random() * (data.moves.length - 1))].move.name
+
         );
 
         arrayName.push(pokemon);
+        console.log(data);
         appendBox(pokemon, pokemonBox, div, count);
     });
 };
@@ -182,10 +184,20 @@ const yourPokemon = () => {
     }
 }
 
-const playAudio = () => {
-    const audioTag = $("<audio src='../audio/pokemon-battle.mp3' id='audio'>");
-    $('#battleContainer').append(audioTag);
-    const audio = document.getElementById('audio');
+const playAttackAudio = () => {
+    const audio = document.getElementById('attack');
+    audio.play();
+}
+const playMainAudio = () => {
+    const audio = document.getElementById('battle');
+    audio.play();
+}
+const playDamageAudio = () => {
+    const audio = document.getElementById('damage');
+    audio.play();
+}
+const playFaintAudio = () => {
+    const audio = document.getElementById('faint');
     audio.play();
 }
 
@@ -344,7 +356,7 @@ const createAttackMenu = () => {
     $('.leftBorder').append($('.leftBar'));
 }
 
-const playerAttack = () => {
+const playerAttack1 = () => {
 
     $('.leftBar').empty();
 
@@ -357,9 +369,11 @@ const playerAttack = () => {
 
     setTimeout(function() {
         $('#yourSprite').addClass('yourAttackAnimation');
+        playAttackAudio();
     }, 500);
     setTimeout(function() {
         $('#oppSprite').addClass('blink');
+        playDamageAudio();
     }, 1000);
 
 
@@ -411,16 +425,267 @@ const playerAttack = () => {
     if(oppSelectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#oppSprite').css('margin-top', '100rem');
+            $('#oppSprite').css('margin-top', '15rem');
+            playFaintAudio();
             $('.leftBar').empty();
             $('.leftBar').append(p);
             p.text(`${oppSelectedPokemon[0].name.toUpperCase()} has fainted...`);
 
-        }, 4000);
+        }, 5000);
     }
 }
 
-const oppAttack = () => {
+const playerAttack2 = () => {
+
+    $('.leftBar').empty();
+
+    const p = $("<p class = 'attackText'>");
+    p.text(`${selectedPokemon[0].name.toUpperCase()} used ${selectedPokemon[0].attack2[0].toUpperCase()}`);
+    $('.leftBar').append(p);
+
+
+
+
+    setTimeout(function() {
+        $('#yourSprite').addClass('yourAttackAnimation');
+        playAttackAudio();
+    }, 500);
+    setTimeout(function() {
+        $('#oppSprite').addClass('blink');
+        playDamageAudio();
+    }, 1000);
+
+
+
+
+    let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
+    const damage = selectedPokemon[0].attack2[randDmg];
+
+    oppSelectedPokemon[0].currentHp -= damage;
+
+    attackNum = damage;
+    let a = (oppSelectedPokemon[0].currentHp * 100) / oppSelectedPokemon[0].hp;
+
+    setTimeout(function() {
+
+        $('.leftBar').empty();
+        $('.leftBar').append(p);
+
+
+
+        if(randDmg === 1) {
+            p.text(`It\'s not very effective...`);
+        }
+
+        else if(randDmg === 3) {
+            p.text(`It\'s super effective!`);
+        }
+
+
+
+
+        $('#oppUpdatedHealthBar').animate({
+            'width': a + "%"
+        }, 700);
+
+        if(oppSelectedPokemon[0].currentHp < (oppSelectedPokemon[0].hp / 2) && oppSelectedPokemon[0].currentHp > (oppSelectedPokemon[0].hp / 4)) {
+            $('#oppUpdatedHealthBar').css('background-color', '#E6C916');
+        }
+    
+        else if(oppSelectedPokemon[0].currentHp <= (oppSelectedPokemon[0].hp / 4)) {
+            $('#oppUpdatedHealthBar').css('background-color', '#FD5439');
+        }
+
+        $('#yourSprite').removeClass('yourAttackAnimation');
+        $('#oppSprite').removeClass('blink');
+
+    }, 2250);
+
+    if(oppSelectedPokemon[0].currentHp <= 0) {
+        gameOver = 0;
+        setTimeout(function() {
+            $('#oppSprite').css('margin-top', '15rem');
+            playFaintAudio();
+            $('.leftBar').empty();
+            $('.leftBar').append(p);
+            p.text(`${oppSelectedPokemon[0].name.toUpperCase()} has fainted...`);
+
+        }, 5000);
+    }
+}
+
+const playerAttack3 = () => {
+
+    $('.leftBar').empty();
+
+    const p = $("<p class = 'attackText'>");
+    p.text(`${selectedPokemon[0].name.toUpperCase()} used ${selectedPokemon[0].attack3[0].toUpperCase()}`);
+    $('.leftBar').append(p);
+
+
+
+
+    setTimeout(function() {
+        $('#yourSprite').addClass('yourAttackAnimation');
+        playAttackAudio();
+    }, 500);
+    setTimeout(function() {
+        $('#oppSprite').addClass('blink');
+        playDamageAudio();
+    }, 1000);
+
+
+
+
+    let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
+    const damage = selectedPokemon[0].attack3[randDmg];
+
+    oppSelectedPokemon[0].currentHp -= damage;
+
+    attackNum = damage;
+    let a = (oppSelectedPokemon[0].currentHp * 100) / oppSelectedPokemon[0].hp;
+
+    setTimeout(function() {
+
+        $('.leftBar').empty();
+        $('.leftBar').append(p);
+
+
+
+        if(randDmg === 1) {
+            p.text(`It\'s not very effective...`);
+        }
+
+        else if(randDmg === 3) {
+            p.text(`It\'s super effective!`);
+        }
+
+
+
+
+        $('#oppUpdatedHealthBar').animate({
+            'width': a + "%"
+        }, 700);
+
+        if(oppSelectedPokemon[0].currentHp < (oppSelectedPokemon[0].hp / 2) && oppSelectedPokemon[0].currentHp > (oppSelectedPokemon[0].hp / 4)) {
+            $('#oppUpdatedHealthBar').css('background-color', '#E6C916');
+        }
+    
+        else if(oppSelectedPokemon[0].currentHp <= (oppSelectedPokemon[0].hp / 4)) {
+            $('#oppUpdatedHealthBar').css('background-color', '#FD5439');
+        }
+
+        $('#yourSprite').removeClass('yourAttackAnimation');
+        $('#oppSprite').removeClass('blink');
+
+    }, 2250);
+
+    if(oppSelectedPokemon[0].currentHp <= 0) {
+        gameOver = 0;
+        setTimeout(function() {
+            $('#oppSprite').css('margin-top', '15rem');
+            playFaintAudio();
+            $('.leftBar').empty();
+            $('.leftBar').append(p);
+            p.text(`${oppSelectedPokemon[0].name.toUpperCase()} has fainted...`);
+
+        }, 5000);
+    }
+}
+
+const playerAttack4 = () => {
+
+    $('.leftBar').empty();
+
+    const p = $("<p class = 'attackText'>");
+    p.text(`${selectedPokemon[0].name.toUpperCase()} used ${selectedPokemon[0].attack4[0].toUpperCase()}`);
+    $('.leftBar').append(p);
+
+
+
+
+    setTimeout(function() {
+        $('#yourSprite').addClass('yourAttackAnimation');
+        playAttackAudio();
+    }, 500);
+    setTimeout(function() {
+        $('#oppSprite').addClass('blink');
+        playDamageAudio();
+    }, 1000);
+
+
+
+
+    let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
+    const damage = selectedPokemon[0].attack4[randDmg];
+
+    oppSelectedPokemon[0].currentHp -= damage;
+
+    attackNum = damage;
+    let a = (oppSelectedPokemon[0].currentHp * 100) / oppSelectedPokemon[0].hp;
+
+    setTimeout(function() {
+
+        $('.leftBar').empty();
+        $('.leftBar').append(p);
+
+
+
+        if(randDmg === 1) {
+            p.text(`It\'s not very effective...`);
+        }
+
+        else if(randDmg === 3) {
+            p.text(`It\'s super effective!`);
+        }
+
+
+
+
+        $('#oppUpdatedHealthBar').animate({
+            'width': a + "%"
+        }, 700);
+
+        if(oppSelectedPokemon[0].currentHp < (oppSelectedPokemon[0].hp / 2) && oppSelectedPokemon[0].currentHp > (oppSelectedPokemon[0].hp / 4)) {
+            $('#oppUpdatedHealthBar').css('background-color', '#E6C916');
+        }
+    
+        else if(oppSelectedPokemon[0].currentHp <= (oppSelectedPokemon[0].hp / 4)) {
+            $('#oppUpdatedHealthBar').css('background-color', '#FD5439');
+        }
+
+        $('#yourSprite').removeClass('yourAttackAnimation');
+        $('#oppSprite').removeClass('blink');
+
+    }, 2250);
+
+    if(oppSelectedPokemon[0].currentHp <= 0) {
+        gameOver = 0;
+        setTimeout(function() {
+            $('#oppSprite').css('margin-top', '15rem');
+            playFaintAudio();
+            $('.leftBar').empty();
+            $('.leftBar').append(p);
+            p.text(`${oppSelectedPokemon[0].name.toUpperCase()} has fainted...`);
+
+        }, 5000);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const oppAttack1 = () => {
 
     $('.leftBar').empty();
 
@@ -432,9 +697,11 @@ const oppAttack = () => {
 
     setTimeout(function() {
         $('#oppSprite').addClass('oppAttackAnimation');
+        playAttackAudio();
     }, 500);
     setTimeout(function() {
         $('#yourSprite').addClass('blink');
+        playDamageAudio();
     }, 1000);
 
 
@@ -489,12 +756,289 @@ const oppAttack = () => {
     if(selectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#yourSprite').css('margin-top', '100rem');
+            $('#yourSprite').css('margin-top', '15rem');
+            playFaintAudio();
             $('.leftBar').empty();
             $('.leftBar').append(p);
             p.text(`${selectedPokemon[0].name.toUpperCase()} has fainted...`);
 
+        }, 5000);
+    }
+
+    else {
+        setTimeout(function() {
+
+            const bar = $('.bar');
+            $('.leftBorder').remove();
+            $('.rightBorder').remove();
+            createLeftBar(bar);
+            createRightBar(bar);
         }, 4000);
+    }
+}
+
+const oppAttack2 = () => {
+
+    $('.leftBar').empty();
+
+    const p = $("<p class = 'attackText'>");
+    p.text(`${oppSelectedPokemon[0].name.toUpperCase()} used ${oppSelectedPokemon[0].attack2[0].toUpperCase()}`);
+    $('.leftBar').append(p);
+
+
+
+    setTimeout(function() {
+        $('#oppSprite').addClass('oppAttackAnimation');
+        playAttackAudio();
+    }, 500);
+    setTimeout(function() {
+        $('#yourSprite').addClass('blink');
+        playDamageAudio();
+    }, 1000);
+
+
+
+
+    let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
+    const damage = oppSelectedPokemon[0].attack2[randDmg];
+    selectedPokemon[0].currentHp -= damage;
+
+
+
+    let a = (selectedPokemon[0].currentHp * 100) / selectedPokemon[0].hp;
+
+
+
+    setTimeout(function() {
+
+        $('.leftBar').empty();
+        $('.leftBar').append(p);
+
+
+        if(randDmg === 1) {
+            p.text(`It\'s not very effective...`);
+        }
+
+        else if(randDmg === 3) {
+            p.text(`It\'s super effective!`);
+        }
+
+
+
+        $('#playerUpdatedHealthBar').animate({
+            'width': a + "%"
+        }, 700);
+
+        if(selectedPokemon[0].currentHp < (selectedPokemon[0].hp / 2) && selectedPokemon[0].currentHp > (selectedPokemon[0].hp / 4)) {
+            $('#playerUpdatedHealthBar').css('background-color', '#E6C916');
+        }
+
+        else if(selectedPokemon[0].currentHp <= (selectedPokemon[0].hp / 4)) {
+            $('#playerUpdatedHealthBar').css('background-color', '#FD5439');
+        }
+
+        const currentHealth = $('.currentHealth');
+        currentHealth.text((selectedPokemon[0].currentHp) + '/ ' + selectedPokemon[0].hp);
+
+        $('#oppSprite').removeClass('oppAttackAnimation');
+        $('#yourSprite').removeClass('blink');
+        
+    }, 2250);
+
+    if(selectedPokemon[0].currentHp <= 0) {
+        gameOver = 0;
+        setTimeout(function() {
+            $('#yourSprite').css('margin-top', '15rem');
+            playFaintAudio();
+            $('.leftBar').empty();
+            $('.leftBar').append(p);
+            p.text(`${selectedPokemon[0].name.toUpperCase()} has fainted...`);
+
+        }, 5000);
+    }
+
+    else {
+        setTimeout(function() {
+
+            const bar = $('.bar');
+            $('.leftBorder').remove();
+            $('.rightBorder').remove();
+            createLeftBar(bar);
+            createRightBar(bar);
+        }, 4000);
+    }
+}
+
+const oppAttack3 = () => {
+
+    $('.leftBar').empty();
+
+    const p = $("<p class = 'attackText'>");
+    p.text(`${oppSelectedPokemon[0].name.toUpperCase()} used ${oppSelectedPokemon[0].attack3[0].toUpperCase()}`);
+    $('.leftBar').append(p);
+
+
+
+    setTimeout(function() {
+        $('#oppSprite').addClass('oppAttackAnimation');
+        playAttackAudio();
+    }, 500);
+    setTimeout(function() {
+        $('#yourSprite').addClass('blink');
+        playDamageAudio();
+    }, 1000);
+
+
+
+
+    let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
+    const damage = oppSelectedPokemon[0].attack3[randDmg];
+    selectedPokemon[0].currentHp -= damage;
+
+
+
+    let a = (selectedPokemon[0].currentHp * 100) / selectedPokemon[0].hp;
+
+
+
+    setTimeout(function() {
+
+        $('.leftBar').empty();
+        $('.leftBar').append(p);
+
+
+        if(randDmg === 1) {
+            p.text(`It\'s not very effective...`);
+        }
+
+        else if(randDmg === 3) {
+            p.text(`It\'s super effective!`);
+        }
+
+
+
+        $('#playerUpdatedHealthBar').animate({
+            'width': a + "%"
+        }, 700);
+
+        if(selectedPokemon[0].currentHp < (selectedPokemon[0].hp / 2) && selectedPokemon[0].currentHp > (selectedPokemon[0].hp / 4)) {
+            $('#playerUpdatedHealthBar').css('background-color', '#E6C916');
+        }
+
+        else if(selectedPokemon[0].currentHp <= (selectedPokemon[0].hp / 4)) {
+            $('#playerUpdatedHealthBar').css('background-color', '#FD5439');
+        }
+
+        const currentHealth = $('.currentHealth');
+        currentHealth.text((selectedPokemon[0].currentHp) + '/ ' + selectedPokemon[0].hp);
+
+        $('#oppSprite').removeClass('oppAttackAnimation');
+        $('#yourSprite').removeClass('blink');
+        
+    }, 2250);
+
+    if(selectedPokemon[0].currentHp <= 0) {
+        gameOver = 0;
+        setTimeout(function() {
+            $('#yourSprite').css('margin-top', '15rem');
+            playFaintAudio();
+            $('.leftBar').empty();
+            $('.leftBar').append(p);
+            p.text(`${selectedPokemon[0].name.toUpperCase()} has fainted...`);
+
+        }, 5000);
+    }
+
+    else {
+        setTimeout(function() {
+
+            const bar = $('.bar');
+            $('.leftBorder').remove();
+            $('.rightBorder').remove();
+            createLeftBar(bar);
+            createRightBar(bar);
+        }, 4000);
+    }
+}
+
+const oppAttack4 = () => {
+
+    $('.leftBar').empty();
+
+    const p = $("<p class = 'attackText'>");
+    p.text(`${oppSelectedPokemon[0].name.toUpperCase()} used ${oppSelectedPokemon[0].attack4[0].toUpperCase()}`);
+    $('.leftBar').append(p);
+
+
+
+    setTimeout(function() {
+        $('#oppSprite').addClass('oppAttackAnimation');
+        playAttackAudio();
+    }, 500);
+    setTimeout(function() {
+        $('#yourSprite').addClass('blink');
+        playDamageAudio();
+    }, 1000);
+
+
+
+
+    let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
+    const damage = oppSelectedPokemon[0].attack4[randDmg];
+    selectedPokemon[0].currentHp -= damage;
+
+
+
+    let a = (selectedPokemon[0].currentHp * 100) / selectedPokemon[0].hp;
+
+
+
+    setTimeout(function() {
+
+        $('.leftBar').empty();
+        $('.leftBar').append(p);
+
+
+        if(randDmg === 1) {
+            p.text(`It\'s not very effective...`);
+        }
+
+        else if(randDmg === 3) {
+            p.text(`It\'s super effective!`);
+        }
+
+
+
+        $('#playerUpdatedHealthBar').animate({
+            'width': a + "%"
+        }, 700);
+
+        if(selectedPokemon[0].currentHp < (selectedPokemon[0].hp / 2) && selectedPokemon[0].currentHp > (selectedPokemon[0].hp / 4)) {
+            $('#playerUpdatedHealthBar').css('background-color', '#E6C916');
+        }
+
+        else if(selectedPokemon[0].currentHp <= (selectedPokemon[0].hp / 4)) {
+            $('#playerUpdatedHealthBar').css('background-color', '#FD5439');
+        }
+
+        const currentHealth = $('.currentHealth');
+        currentHealth.text((selectedPokemon[0].currentHp) + '/ ' + selectedPokemon[0].hp);
+
+        $('#oppSprite').removeClass('oppAttackAnimation');
+        $('#yourSprite').removeClass('blink');
+        
+    }, 2250);
+
+    if(selectedPokemon[0].currentHp <= 0) {
+        gameOver = 0;
+        setTimeout(function() {
+            $('#yourSprite').css('margin-top', '15rem');
+            playFaintAudio();
+            $('.leftBar').empty();
+            $('.leftBar').append(p);
+            p.text(`${selectedPokemon[0].name.toUpperCase()} has fainted...`);
+
+        }, 5000);
     }
 
     else {
@@ -549,7 +1093,7 @@ $(() => {
         yourPokemon();
         oppPokemon();
 
-        playAudio();
+        playMainAudio();
 
         createOppBattleCard();
         createPlayerBattleCard();
@@ -572,10 +1116,37 @@ $(() => {
 
     $('body').on('click', '#attack1', (event) => {
         if(gameOver === 1) {
-        playerAttack();
+        playerAttack1();
         }
         if(gameOver === 1) {
-        setTimeout(oppAttack, 5000);
+        setTimeout(oppAttack1, 5000);
+        }
+    });
+
+    $('body').on('click', '#attack2', (event) => {
+        if(gameOver === 1) {
+        playerAttack2();
+        }
+        if(gameOver === 1) {
+        setTimeout(oppAttack2, 5000);
+        }
+    });
+
+    $('body').on('click', '#attack3', (event) => {
+        if(gameOver === 1) {
+        playerAttack3();
+        }
+        if(gameOver === 1) {
+        setTimeout(oppAttack3, 5000);
+        }
+    });
+
+    $('body').on('click', '#attack4', (event) => {
+        if(gameOver === 1) {
+        playerAttack4();
+        }
+        if(gameOver === 1) {
+        setTimeout(oppAttack4, 5000);
         }
     });
 

@@ -8,6 +8,10 @@
     /* There is no SVG version of this font due to support being dropped in SVG 2 */
   }
 
+audio {
+    display: none;
+}
+
 .container {
     padding-top: 4%;
     padding-bottom: 4%;

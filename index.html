@@ -27,16 +27,21 @@
     <div class = 'container'>
             <div class = 'start'>
                     <button id = 'create'>Get New Team</button>
-                    <input id = 'gen' placeholder = 'All'></input>
+                    <input id = 'gen' value = 'All'></input>
             </div>
         <div id = 'team1'></div>
         <div id = 'team2'></div>
+        
 
         <div class = 'confirmDiv'></div>
     </div>
 
     <div id = 'battleContainer'>
     </div>
+    <audio id = 'attack' src = "audio/attack.mp3" type = "audio/mpeg" preload = "auto" autobuffer controls ></audio>
+    <audio id = 'battle' src = "audio/battle.ogg" type = "audio/ogg" preload = "auto" autobuffer controls ></audio>
+    <audio id = 'damage' src = "audio/damage.mp3" type = "audio/meg" preload = "auto" autobuffer controls ></audio>
+    <audio id = 'faint' src = "audio/faint.mp3" type = "audio/meg" preload = "auto" autobuffer controls ></audio>
 
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
     <script src='javascript/app.js'></script>
