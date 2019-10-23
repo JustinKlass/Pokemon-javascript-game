@@ -33,13 +33,14 @@
 
 #yourSprite {
     margin-left: -20rem;
-    margin-top: 0rem;
+    margin-top: 0em;
     width: 20rem;
     bottom: -20%;
     height: 20rem;
     position: relative;
-    -webkit-transition: margin-top 2s;
-    transition: margin-top 2s;
+
+    -webkit-transition: margin-top 2s ease-in;
+    transition: margin-top 2s ease-in;
 
     -webkit-transition: margin-left 2s;
     transition: margin-left 2s;
@@ -56,12 +57,13 @@
 
 #oppSprite {
     margin-right: -20rem;
+    margin-top: 4em;
     width: 14rem;
-    margin-top: 4rem;
     height: 14rem;
     position: relative;
-    -webkit-transition: margin-top 2s; /* For Safari 3.1 to 6.0 */
-    transition: margin-top 2s;
+
+    -webkit-transition: margin-top 2s ease-in; /* For Safari 3.1 to 6.0 */
+    transition: margin-top 2s ease-in;
 
     -webkit-transition: margin-right 2s;
     transition: margin-right 2s;

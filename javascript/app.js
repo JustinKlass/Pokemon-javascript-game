@@ -188,14 +188,17 @@ const playAttackAudio = () => {
     const audio = document.getElementById('attack');
     audio.play();
 }
+
 const playMainAudio = () => {
     const audio = document.getElementById('battle');
     audio.play();
 }
+
 const playDamageAudio = () => {
     const audio = document.getElementById('damage');
     audio.play();
 }
+
 const playFaintAudio = () => {
     const audio = document.getElementById('faint');
     audio.play();
@@ -425,13 +428,13 @@ const playerAttack1 = () => {
     if(oppSelectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#oppSprite').css('margin-top', '15rem');
+            $('#oppSprite').css('margin-top', '15em');
             playFaintAudio();
             $('.leftBar').empty();
             $('.leftBar').append(p);
             p.text(`${oppSelectedPokemon[0].name.toUpperCase()} has fainted...`);
 
-        }, 5000);
+        }, 4000);
     }
 }
 
@@ -504,13 +507,13 @@ const playerAttack2 = () => {
     if(oppSelectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#oppSprite').css('margin-top', '15rem');
+            $('#oppSprite').css('margin-top', '15em');
             playFaintAudio();
             $('.leftBar').empty();
             $('.leftBar').append(p);
             p.text(`${oppSelectedPokemon[0].name.toUpperCase()} has fainted...`);
 
-        }, 5000);
+        }, 4000);
     }
 }
 
@@ -583,13 +586,13 @@ const playerAttack3 = () => {
     if(oppSelectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#oppSprite').css('margin-top', '15rem');
+            $('#oppSprite').css('margin-top', '15em');
             playFaintAudio();
             $('.leftBar').empty();
             $('.leftBar').append(p);
             p.text(`${oppSelectedPokemon[0].name.toUpperCase()} has fainted...`);
 
-        }, 5000);
+        }, 4000);
     }
 }
 
@@ -662,13 +665,13 @@ const playerAttack4 = () => {
     if(oppSelectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#oppSprite').css('margin-top', '15rem');
+            $('#oppSprite').css('margin-top', '15em');
             playFaintAudio();
             $('.leftBar').empty();
             $('.leftBar').append(p);
             p.text(`${oppSelectedPokemon[0].name.toUpperCase()} has fainted...`);
 
-        }, 5000);
+        }, 4000);
     }
 }
 
@@ -756,13 +759,13 @@ const oppAttack1 = () => {
     if(selectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#yourSprite').css('margin-top', '15rem');
+            $('#yourSprite').css('margin-top', '15em');
             playFaintAudio();
             $('.leftBar').empty();
             $('.leftBar').append(p);
             p.text(`${selectedPokemon[0].name.toUpperCase()} has fainted...`);
 
-        }, 5000);
+        }, 4000);
     }
 
     else {
@@ -848,13 +851,13 @@ const oppAttack2 = () => {
     if(selectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#yourSprite').css('margin-top', '15rem');
+            $('#yourSprite').css('margin-top', '15em');
             playFaintAudio();
             $('.leftBar').empty();
             $('.leftBar').append(p);
             p.text(`${selectedPokemon[0].name.toUpperCase()} has fainted...`);
 
-        }, 5000);
+        }, 4000);
     }
 
     else {
@@ -940,13 +943,13 @@ const oppAttack3 = () => {
     if(selectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#yourSprite').css('margin-top', '15rem');
+            $('#yourSprite').css('margin-top', '15em');
             playFaintAudio();
             $('.leftBar').empty();
             $('.leftBar').append(p);
             p.text(`${selectedPokemon[0].name.toUpperCase()} has fainted...`);
 
-        }, 5000);
+        }, 4000);
     }
 
     else {
@@ -1032,13 +1035,13 @@ const oppAttack4 = () => {
     if(selectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#yourSprite').css('margin-top', '15rem');
+            $('#yourSprite').css('margin-top', '15em');
             playFaintAudio();
             $('.leftBar').empty();
             $('.leftBar').append(p);
             p.text(`${selectedPokemon[0].name.toUpperCase()} has fainted...`);
 
-        }, 5000);
+        }, 4000);
     }
 
     else {
