@@ -32,11 +32,16 @@
 }
 
 #yourSprite {
-    margin-left: 8rem;
+    margin-left: -20rem;
     width: 20rem;
     bottom: -20%;
     height: 20rem;
     position: relative;
+    -webkit-transition: margin-top 2s;
+    transition: margin-top 2s;
+
+    -webkit-transition: margin-left 2s;
+    transition: margin-left 2s;
 }
 
 .yourAttackAnimation {
@@ -49,11 +54,16 @@
 }
 
 #oppSprite {
-    margin-right: 9rem;
+    margin-right: -20rem;
     width: 14rem;
     margin-top: 4rem;
     height: 14rem;
     position: relative;
+    -webkit-transition: margin-top 2s; /* For Safari 3.1 to 6.0 */
+    transition: margin-top 2s;
+
+    -webkit-transition: margin-right 2s;
+    transition: margin-right 2s;
 }
 
 .oppAttackAnimation {
@@ -237,32 +247,31 @@
  
 @-webkit-keyframes playerAttack {
 
-  0%   {background-color:red; left:0px; bottom:0px;}
-  50%  {background-color:blue; left:50px; bottom:50px;}
-  100% {background-color:red; left:0px; bottom:0px;}
+  0%   {left:0px; bottom:0px;}
+  50%  {left:50px; bottom:50px;}
+  100% {left:0px; bottom:0px;}
 }
 
 @keyframes playerAttack {
 
-    0%   {background-color:red; left:0px; bottom:0px;}
-    50%  {background-color:blue; left:50px; bottom:50px;}
-    100% {background-color:red; left:0px; bottom:0px;}
+    0%   {left:0px; bottom:0px;}
+    50%  {left:50px; bottom:50px;}
+    100% {left:0px; bottom:0px;}
 }
 
 @-webkit-keyframes oppAttack {
 
-    0%   {background-color:red; right:0px; top:0px;}
-    50%  {background-color:blue; right:50px; top:50px;}
-    100% {background-color:red; right:0px; top:0px;}
+    0%   {right:0px; top:0px;}
+    50%  {right:50px; top:50px;}
+    100% {right:0px; top:0px;}
 }
 
 @keyframes oppAttack {
 
-    0%   {background-color:red; right:0px; top:0px;}
-    50%  {background-color:blue; right:50px; top:50px;}
-    100% {background-color:red; right:0px; top:0px;}
+    0%   {right:0px; top:0px;}
+    50%  {right:50px; top:50px;}
+    100% {right:0px; top:0px;}
 }
-
 
 @-moz-keyframes blink {
     0% {

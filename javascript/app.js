@@ -41,10 +41,10 @@ const getCapitalizedName = (name) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
-const scrollWindow = (id) => {
+const scrollWindow = (id, time) => {
     event.preventDefault();
     $('html, body').animate({
-        scrollTop: $(id).offset().top}, 1500);
+        scrollTop: $(id).offset().top}, time);
 }
 
 const appendBox = (pokemon, pokemonBox, div, count) => {
@@ -192,6 +192,10 @@ const createPlayerBattleCard = () => {
 
     spriteDiv.append(backSprite);
 
+    setTimeout(function() {
+        $(backSprite).css('margin-left', '8rem');
+    }, 1000);
+
     $(playerBattle).append(spriteDiv);
     $(playerBattle).append(battleCard);
     $('#battleContainer').append(playerBattle)
@@ -223,6 +227,10 @@ const createOppBattleCard = () => {
 
     
     spriteDiv.append(sprite);
+
+    setTimeout(function() {
+        $(sprite).css('margin-right', '9rem');
+    }, 1000);
 
     $(oppBattle).append(battleCard);
     $(oppBattle).append(spriteDiv);
@@ -330,7 +338,7 @@ const playerAttack = () => {
     }, 1000);
 
 
-    
+
 
     let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
     const damage = selectedPokemon[0].attack1[randDmg];
@@ -344,7 +352,19 @@ const playerAttack = () => {
 
         $('.leftBar').empty();
         $('.leftBar').append(p);
-        p.text(`It\'s super effective!`);
+
+
+
+        if(randDmg === 1) {
+            p.text(`It\'s not very effective...`);
+        }
+
+        else if(randDmg === 3) {
+            p.text(`It\'s super effective!`);
+        }
+
+
+
 
         $('#oppUpdatedHealthBar').animate({
             'width': a + "%"
@@ -366,8 +386,11 @@ const playerAttack = () => {
     if(oppSelectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            alert('The opponent\'s pokemon fainted... Game Over!');
-            $('#oppSprite').remove();
+            $('#oppSprite').css('margin-top', '100rem');
+            $('.leftBar').empty();
+            $('.leftBar').append(p);
+            p.text(`${oppSelectedPokemon[0].name.toUpperCase()} has fainted...`);
+
         }, 4000);
     }
 }
@@ -377,23 +400,46 @@ const oppAttack = () => {
     $('.leftBar').empty();
 
     const p = $("<p class = 'attackText'>");
-
     p.text(`${oppSelectedPokemon[0].name.toUpperCase()} used ${oppSelectedPokemon[0].attack1[0].toUpperCase()}`);
     $('.leftBar').append(p);
 
-    $('#oppSprite').addClass('oppAttackAnimation');
+
+
+    setTimeout(function() {
+        $('#oppSprite').addClass('oppAttackAnimation');
+    }, 500);
+    setTimeout(function() {
+        $('#yourSprite').addClass('blink');
+    }, 1000);
+
+
+
 
     let randDmg = (Math.floor(Math.random() * Math.floor(3)) + 1);
     const damage = oppSelectedPokemon[0].attack1[randDmg];
     selectedPokemon[0].currentHp -= damage;
 
+
+
     let a = (selectedPokemon[0].currentHp * 100) / selectedPokemon[0].hp;
+
+
 
     setTimeout(function() {
 
         $('.leftBar').empty();
         $('.leftBar').append(p);
-        p.text(`It\'s super effective!`);
+
+
+        if(randDmg === 1) {
+            p.text(`It\'s not very effective...`);
+        }
+
+        else if(randDmg === 3) {
+            p.text(`It\'s super effective!`);
+        }
+
+
 
         $('#playerUpdatedHealthBar').animate({
             'width': a + "%"
@@ -408,30 +454,34 @@ const oppAttack = () => {
         }
 
         const currentHealth = $('.currentHealth');
-
         currentHealth.text((selectedPokemon[0].currentHp) + '/ ' + selectedPokemon[0].hp);
 
         $('#oppSprite').removeClass('oppAttackAnimation');
+        $('#yourSprite').removeClass('blink');
         
-    }, 2500);
+    }, 2250);
 
     if(selectedPokemon[0].currentHp <= 0) {
         gameOver = 0;
         setTimeout(function() {
-            $('#yourSprite').remove();
+            $('#yourSprite').css('margin-top', '100rem');
+            $('.leftBar').empty();
+            $('.leftBar').append(p);
+            p.text(`${selectedPokemon[0].name.toUpperCase()} has fainted...`);
+
         }, 4000);
     }
 
-    setTimeout(function() {
+    else {
+        setTimeout(function() {
 
-        const bar = $('.bar');
-        $('.leftBorder').remove();
-        $('.rightBorder').remove();
-        createLeftBar(bar);
-        createRightBar(bar);
-         
-    }, 7000);
-
+            const bar = $('.bar');
+            $('.leftBorder').remove();
+            $('.rightBorder').remove();
+            createLeftBar(bar);
+            createRightBar(bar);
+        }, 4000);
+    }
 }
 
 
@@ -442,7 +492,7 @@ $(() => {
 
     $('#create').on('click', (event) => {
 
-        scrollWindow($('#scroll'));
+        scrollWindow($('#scroll'), 1000);
         $('#team1').empty();
         $('#team2').empty();
         makeTeam(1, 0, yourList);
@@ -465,7 +515,7 @@ $(() => {
         yourSelectedId.shift();
         yourSelectedId.push(parseInt(event.currentTarget.getAttribute('id')));
 
-        scrollWindow(confirm);
+        scrollWindow(confirm, 1000)
 
     });
 
@@ -476,12 +526,8 @@ $(() => {
 
         playAudio();
 
-
-        scrollWindow('#battleContainer');
-
         createOppBattleCard();
         createPlayerBattleCard();
-
 
         const battleContainer = $('#battleContainer');
         const bar = $("<div class = 'bar'>");
@@ -490,6 +536,8 @@ $(() => {
         createRightBar(bar);
 
         $(battleContainer).append(bar);
+
+        scrollWindow(bar, 1000);
 
     });
 
@@ -511,7 +559,11 @@ $(() => {
         const battleContainer = $("<div id = 'battleContainer'>");
         $('body').append(battleContainer);
 
+        selectedPokemon[0].currentHp = selectedPokemon[0].hp;
+        oppSelectedPokemon[0].currentHp = oppSelectedPokemon[0].hp;
+
         selectedPokemon = [];
         oppSelectedPokemon = [];
+
     });
 });
