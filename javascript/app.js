@@ -32,8 +32,33 @@ const getRandomGender = () => {
     }
 }
 /* GETS RANDOM NUMBER BETWEEN 1 803 TO GET A RANDOM POKEMON */
-const getRandomId = () => {
-    let randPokemon = (Math.floor(Math.random() * Math.floor(802)) + 1);
+const getRandomId = (input) => {
+    let randPokemon;
+
+    if(input.text() === 1) {
+        randPokemon = Math.floor(Math.random() * Math.floor(151)) + 1;
+    }
+    else if(input === 2) {
+        randPokemon = Math.floor(Math.random() * (255 - 152)) + 152;
+    }
+    else if(input === 3) {
+        randPokemon = Math.floor(Math.random() * (387 - 252)) + 252;
+    }
+    else if(input === 4) {
+        randPokemon = Math.floor(Math.random() * (494 - 387)) + 387;
+    }
+    else if(input === 5) {
+        randPokemon = Math.floor(Math.random() * (650 - 494)) + 494;
+    }
+    else if(input === 6) {
+        randPokemon = Math.floor(Math.random() * (721 - 650)) + 650;
+    }
+    else if(input === 7) {
+        randPokemon = Math.floor(Math.random() * (803 - 721)) + 721;
+    }
+    else if(input === 'All') {
+        randPokemon = (Math.floor(Math.random() * Math.floor(802)) + 1);
+    }
     return randPokemon;
 }
 
@@ -128,7 +153,7 @@ const makeTeam = (teamNum, count, arrayName) => {
 
         for(j = 0; j < 2; j++) {
 
-            const randomId = getRandomId();
+            const randomId = getRandomId($('#gen').val());
             makePokemon(randomId, div, pokemonBox, count, arrayName);
             count++;
 

@@ -32,10 +32,35 @@
     background-color: #FFCA06;
 }
 
-#create:hover, #confirm:hover {
+#gen {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 30em;
+    color: white;
+    text-align: center;
+    outline: none;
+    text-shadow: 1px 1px 1.5px black;
+    border: 0.3em solid #0D5FBA;
+    background-color: #FFCA06;
+    font-size: 1.5rem;
+}
+
+::-webkit-input-placeholder { /* Edge */
+    color: white;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer */
+    color: white;
+  }
+  
+  ::placeholder {
+    color: white;
+  }
+
+#create:hover, #confirm:hover, #gen:hover {
     background-color: #0D5FBA;
     cursor: pointer;
-}
+} 
 
 .pokemonName {
     display: inline-block;
